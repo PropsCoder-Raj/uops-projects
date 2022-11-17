@@ -2,11 +2,76 @@ import "./style.css";
 import { useEffect } from "react"
 import FooterComponent from "../../Components/Layouts/Footer";
 import SidemenuComponent from "../../Components/Layouts/Sidemenu";
+import $ from "jquery";
 
 function CourcesModule() {
 
   useEffect(() => {
     document.title = "UoPS | Admin - Course Module";
+
+    
+    if (!$.fn.DataTable.isDataTable("#courseTableDT")) {
+      // $(document).ready(function () {
+        setTimeout(function () {
+          $("#courseTableDT").dataTable({
+            destroy: true,
+            pagingType: "full_numbers",
+            pageLength: 20,
+            processing: true,
+            dom: "Bfrtip",
+            select: {
+              style: "single",
+            },
+
+            buttons: [
+              {
+                extend: "pageLength",
+                className: "btn btn-sm btn-secondary bg-secondary",
+              },
+              {
+                extend: "csv",
+                className: "btn btn-sm btn-success bg-success",
+              },
+              {
+                extend: "print",
+                customize: function (win) {
+                  $(win.document.body).css("font-size", "10pt");
+                  $(win.document.body)
+                    .find("table")
+                    .addClass("compact")
+                    .css("font-size", "inherit");
+                },
+                className: "btn btn-sm btn-danger bg-danger",
+              },
+            ],
+
+            fnRowCallback: function (
+              nRow,
+              aData,
+              iDisplayIndex,
+              iDisplayIndexFull
+            ) {
+              var index = iDisplayIndexFull + 1;
+              $("td:first", nRow).html(index);
+              return nRow;
+            },
+
+            lengthMenu: [
+              [10, 20, 30, 50, -1],
+              [10, 20, 30, 50, "All"],
+            ],
+            columnDefs: [
+              {
+                targets: 0,
+                render: function (data, type, row, meta) {
+                  return type === "export" ? meta.row + 1 : data;
+                },
+              },
+            ],
+          });
+        }, 500);
+      // });
+    }
   }, [])
 
   const array = [
@@ -50,9 +115,9 @@ function CourcesModule() {
                           Add Course
                         </button>
                       </h5>
-                      <div class="card-content pt-0">
+                      <div class="card-content p-2">
                         <div class="table-responsive text-start">
-                          <table class="table text-nowrap">
+                          <table class="table text-nowrap" id="courseTableDT">
                             <thead>
                               <tr>
                                 <th>No</th>

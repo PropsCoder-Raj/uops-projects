@@ -7,6 +7,7 @@ import StudentsModule from "./Pages/Students";
 import CoursesModule from "./Pages/Courses";
 
 function App() {
+  
   return (
     <div className="App">
       <Routes>
