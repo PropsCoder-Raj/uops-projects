@@ -2,6 +2,7 @@ import "./style.css";
 import { useEffect } from "react";
 import FooterComponent from "../../Components/Layouts/Footer";
 import SidemenuComponent from "../../Components/Layouts/Sidemenu";
+import AdminNav from "../../Components/Layouts/AdminNav";
 import $ from "jquery";
 
 
@@ -92,6 +93,7 @@ function StudentsModule() {
           <SidemenuComponent />
 
           <div className="layout-page">
+            <AdminNav />
             <div className="content-wrapper">
               <div className="container-xxl flex-grow-1 container-p-y">
 

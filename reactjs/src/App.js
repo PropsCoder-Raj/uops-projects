@@ -5,6 +5,7 @@ import LoginComponent from "./Pages/Auth/Login";
 import TeachersModule from './Pages/Teachers';
 import StudentsModule from "./Pages/Students";
 import CoursesModule from "./Pages/Courses";
+import RegisterComponent from './Pages/Auth/Register';
 
 function App() {
   
@@ -17,6 +18,7 @@ function App() {
         <Route path="/admin-students-module" element={<StudentsModule />} />
         <Route path="/admin-courses-module" element={<CoursesModule />} />
         <Route path="/login" element={<LoginComponent />} />
+        <Route path="/register" element={<RegisterComponent />} />
       </Routes>
     </div>
   );

@@ -2,21 +2,23 @@ import "./style.css";
 import { useEffect } from "react";
 import FooterComponent from "../../Components/Layouts/Footer";
 import SidemenuComponent from "../../Components/Layouts/Sidemenu";
+import AdminNav from "../../Components/Layouts/AdminNav";
 
 function DashboardComponent() {
 
     useEffect(() => {
-      document.title = "UoPS | Admin - Dashboard";
+        document.title = "UoPS | Admin - Dashboard";
     }, [])
 
     return (
-    <>
+        <>
             <div className="layout-wrapper layout-content-navbar">
                 <div className="layout-container">
 
                     <SidemenuComponent />
 
                     <div className="layout-page">
+                        <AdminNav />
                         <div className="content-wrapper">
                             <div className="container-xxl flex-grow-1 container-p-y">
 
@@ -31,9 +33,9 @@ function DashboardComponent() {
                                                     <div className="card-body">
                                                         <h5 className="card-title text-primary">University of Professional Sciences</h5>
                                                         <p className="mb-4">
-                                                        The College of Professional Sciences is comprised of a vibrant and dedicated community of learners, educators, and support staff committed to preparing undergraduate and graduate students in education, health, and the social sciences. 
-                                                        Our college is Magis-in-Service as we are women and men for others meeting the needs of people and organizations in our community and beyond.  
-                                                        
+                                                            The College of Professional Sciences is comprised of a vibrant and dedicated community of learners, educators, and support staff committed to preparing undergraduate and graduate students in education, health, and the social sciences.
+                                                            Our college is Magis-in-Service as we are women and men for others meeting the needs of people and organizations in our community and beyond.
+
                                                         </p>
                                                     </div>
                                                 </div>
@@ -53,8 +55,8 @@ function DashboardComponent() {
                                     </div>
                                 </div>
                                 <div>
-                                    
-                                <div className="offset-lg-3 col-lg-6 col-md-4 order-1">
+
+                                    <div className="offset-lg-3 col-lg-6 col-md-4 order-1">
                                         <div className="row">
                                             <div className="col-lg-4 col-md-12 mb-4">
                                                 <div className="card">
@@ -93,8 +95,8 @@ function DashboardComponent() {
 
                     <div className="layout-overlay layout-menu-toggle"></div>
                 </div>
-            </div>    
-    </>
+            </div>
+        </>
     );
 }
 export default DashboardComponent;
