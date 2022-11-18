@@ -1,20 +1,19 @@
 import "./style.css";
 import { useEffect } from "react";
-import FooterComponent from "../../Components/Layouts/Footer";
-import SidemenuComponent from "../../Components/Layouts/Sidemenu";
-import AdminNav from "../../Components/Layouts/AdminNav";
+import FooterComponent from "../../../Components/Layouts/Footer";
+import SidemenuComponent from "../../../Components/Layouts/Sidemenu";
+import AdminNav from "../../../Components/Layouts/AdminNav";
 import $ from "jquery";
 
-
-function StudentsModule() {
+function TeachersModule() {
 
   useEffect(() => {
-    document.title = "UoPS | Admin - Student Module";
+    document.title = "UoPS | Admin - Teacher Module";
 
-    if (!$.fn.DataTable.isDataTable("#studentTableDT")) {
+    if (!$.fn.DataTable.isDataTable("#teacherTableDT")) {
       // $(document).ready(function () {
         setTimeout(function () {
-          $("#studentTableDT").dataTable({
+          $("#teacherTableDT").dataTable({
             destroy: true,
             pagingType: "full_numbers",
             pageLength: 20,
@@ -76,13 +75,13 @@ function StudentsModule() {
   }, [])
 
   const array = [
-    { name: "Rohit Pandit", email: "rohit@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+91 5487986532', status: "ACTIVE" },
-    { name: "Aditya Pandit", email: "aditya@gmail.com", course: "B.Com", phoneNumber: '+91 9865542145', status: "ACTIVE" },
-    { name: "Pratik", email: "pratik@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+91 4578651278', status: "DEACTIVE" },
-    { name: "Aniket", email: "ani@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+91 5487986532', status: "ACTIVE" },
-    { name: "Suraj P", email: "suraj@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+91 7845568989', status: "ACTIVE" },
-    { name: "Rakesh", email: "rak@gmail.com", course: "B.B.A", phoneNumber: '+91 7878989865', status: "ACTIVE" },
-    { name: "Siddhu", email: "siddhu@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+91 1256234556', status: "ACTIVE" },
+    { name: "Aniket", email: "ani@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
+    { name: "Suraj P", email: "suraj@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
+    { name: "Rakesh", email: "rak@gmail.com", course: "B.B.A", status: "ACTIVE" },
+    { name: "Aditya Pandit", email: "aditya@gmail.com", course: "B.Com", status: "ACTIVE" },
+    { name: "Pratik", email: "pratik@gmail.com", course: "BE in Computer Engineering", status: "DEACTIVE" },
+    { name: "Siddhu", email: "siddhu@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
+    { name: "Rohit Pandit", email: "rohit@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
   ]
 
   return (
@@ -93,17 +92,17 @@ function StudentsModule() {
           <SidemenuComponent />
 
           <div className="layout-page">
-            <AdminNav />
+            <AdminNav profileImgPath="../assets/img/avatars/admin.png" />
             <div className="content-wrapper">
               <div className="container-xxl flex-grow-1 container-p-y">
 
-                <h4 class="fw-bold py-3 mb-4 text-start"><span class="text-muted fw-light">Admin /</span> Students Module</h4>
+                <h4 class="fw-bold py-3 mb-4 text-start"><span class="text-muted fw-light">Admin /</span> Teachers Module</h4>
 
                 <div className="row">
                   <div className="col-lg-12">
                     <div class="card text-start">
                       <h5 class="card-header">
-                        Students List
+                        Teachers List
                         
                         <button
                           type="button"
@@ -111,18 +110,17 @@ function StudentsModule() {
                           data-bs-toggle="modal"
                           data-bs-target="#basicModal"
                         >
-                          Add Student
+                          Add Teacher
                         </button>
                       </h5>
                       <div class="card-content p-2">
                         <div class="table-responsive text-start">
-                          <table class="table text-nowrap" id="studentTableDT">
+                          <table class="table text-nowrap" id="teacherTableDT">
                             <thead>
                               <tr>
                                 <th>No</th>
-                                <th>Students Name</th>
+                                <th>Teachers Name</th>
                                 <th>Email</th>
-                                <th>Phone Number</th>
                                 <th>Courses</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -133,14 +131,13 @@ function StudentsModule() {
                                 array.map((ele, index) => {
                                   return (<>
                                     <tr>
-                                      <td>{index+1}</td>
+                                      <td>{index + 1}</td>
                                       <td>{ele.name}</td>
                                       <td>{ele.email}</td>
-                                      <td>{ele.phoneNumber}</td>
                                       <td>{ele.course}</td>
                                       <td>
-                                        { ele.status === "ACTIVE" && <span class="badge bg-label-success"> ACTIVE </span> }
-                                        { ele.status === "DEACTIVE" && <span class="badge bg-label-danger"> DEACTIVE </span> }
+                                        {ele.status === "ACTIVE" && <span class="badge bg-label-success"> ACTIVE </span>}
+                                        {ele.status === "DEACTIVE" && <span class="badge bg-label-danger"> DEACTIVE </span>}
                                       </td>
                                       <td>
                                         <div class="d-flex align-items-center">
@@ -177,7 +174,7 @@ function StudentsModule() {
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel1">Create/Update Student</h5>
+                  <h5 class="modal-title" id="exampleModalLabel1">Create/Update Teacher</h5>
                   <button
                     type="button"
                     class="btn-close"
@@ -188,14 +185,14 @@ function StudentsModule() {
                 <div class="modal-body text-start">
                   <div class="row">
                     <div class="col mb-3">
-                      <label for="studentName" class="form-label">Student Name</label>
-                      <input type="text" id="studentName" class="form-control" placeholder="Student Name" />
+                      <label for="teacherName" class="form-label">Teacher Name</label>
+                      <input type="text" id="teacherName" class="form-control" placeholder="Teacher Name" />
                     </div>
                   </div>
                   <div class="row">
                     <div class="col mb-3">
                       <label for="email" class="form-label">Email</label>
-                      <input type="number" id="email" class="form-control" placeholder="Email" />
+                      <input type="email" id="email" class="form-control" placeholder="Email" />
                     </div>
                   </div>
                   <div class="row">
@@ -245,4 +242,4 @@ function StudentsModule() {
   );
 }
 
-export default StudentsModule;
+export default TeachersModule;

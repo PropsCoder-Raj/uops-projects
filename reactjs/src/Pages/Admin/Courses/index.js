@@ -1,19 +1,20 @@
 import "./style.css";
-import { useEffect } from "react";
-import FooterComponent from "../../Components/Layouts/Footer";
-import SidemenuComponent from "../../Components/Layouts/Sidemenu";
-import AdminNav from "../../Components/Layouts/AdminNav";
+import { useEffect } from "react"
+import FooterComponent from "../../../Components/Layouts/Footer";
+import SidemenuComponent from "../../../Components/Layouts/Sidemenu";
+import AdminNav from "../../../Components/Layouts/AdminNav";
 import $ from "jquery";
 
-function TeachersModule() {
+function CourcesModule() {
 
   useEffect(() => {
-    document.title = "UoPS | Admin - Teacher Module";
+    document.title = "UoPS | Admin - Course Module";
 
-    if (!$.fn.DataTable.isDataTable("#teacherTableDT")) {
+    
+    if (!$.fn.DataTable.isDataTable("#courseTableDT")) {
       // $(document).ready(function () {
         setTimeout(function () {
-          $("#teacherTableDT").dataTable({
+          $("#courseTableDT").dataTable({
             destroy: true,
             pagingType: "full_numbers",
             pageLength: 20,
@@ -75,13 +76,16 @@ function TeachersModule() {
   }, [])
 
   const array = [
-    { name: "Aniket", email: "ani@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
-    { name: "Suraj P", email: "suraj@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
-    { name: "Rakesh", email: "rak@gmail.com", course: "B.B.A", status: "ACTIVE" },
-    { name: "Aditya Pandit", email: "aditya@gmail.com", course: "B.Com", status: "ACTIVE" },
-    { name: "Pratik", email: "pratik@gmail.com", course: "BE in Computer Engineering", status: "DEACTIVE" },
-    { name: "Siddhu", email: "siddhu@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
-    { name: "Rohit Pandit", email: "rohit@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
+    { name: "BE in Computer Engineering", semister: 8, period: 4, status: "ACTIVE" },
+    { name: "BE in Mechanical Engineering", semister: 8, period: 4, status: "ACTIVE" },
+    { name: "BE in Civil Engineering", semister: 8, period: 4, status: "ACTIVE" },
+    { name: "BE in Electrical Engineering", semister: 8, period: 4, status: "ACTIVE" },
+    { name: "B.B.A.", semister: 6, period: 3, status: "ACTIVE" },
+    { name: "B.Com", semister: 6, period: 3, status: "ACTIVE" },
+    { name: "B.C.A.", semister: 6, period: 3, status: "ACTIVE" },
+    { name: "B.S.C", semister: 6, period: 3, status: "ACTIVE" },
+    { name: "B.C.S.", semister: 6, period: 3, status: "ACTIVE" },
+    { name: "B.A.", semister: 6, period: 3, status: "ACTIVE" },
   ]
 
   return (
@@ -92,36 +96,37 @@ function TeachersModule() {
           <SidemenuComponent />
 
           <div className="layout-page">
-            <AdminNav />
+            
+            <AdminNav profileImgPath="../assets/img/avatars/admin.png" />
             <div className="content-wrapper">
               <div className="container-xxl flex-grow-1 container-p-y">
 
-                <h4 class="fw-bold py-3 mb-4 text-start"><span class="text-muted fw-light">Admin /</span> Teachers Module</h4>
+                <h4 class="fw-bold py-3 mb-4 text-start"><span class="text-muted fw-light">Admin /</span> Cources Module</h4>
 
                 <div className="row">
                   <div className="col-lg-12">
                     <div class="card text-start">
                       <h5 class="card-header">
-                        Teachers List
-                        
+                        Cources List
+
                         <button
                           type="button"
                           class="btn btn-primary float-end"
                           data-bs-toggle="modal"
                           data-bs-target="#basicModal"
                         >
-                          Add Teacher
+                          Add Course
                         </button>
                       </h5>
                       <div class="card-content p-2">
                         <div class="table-responsive text-start">
-                          <table class="table text-nowrap" id="teacherTableDT">
+                          <table class="table text-nowrap" id="courseTableDT">
                             <thead>
                               <tr>
                                 <th>No</th>
-                                <th>Teachers Name</th>
-                                <th>Email</th>
-                                <th>Courses</th>
+                                <th>Cource Name</th>
+                                <th>Semister</th>
+                                <th>Period</th>
                                 <th>Status</th>
                                 <th>Action</th>
                               </tr>
@@ -133,8 +138,8 @@ function TeachersModule() {
                                     <tr>
                                       <td>{index + 1}</td>
                                       <td>{ele.name}</td>
-                                      <td>{ele.email}</td>
-                                      <td>{ele.course}</td>
+                                      <td>{ele.semister} SEM</td>
+                                      <td>{ele.period} YEAR</td>
                                       <td>
                                         {ele.status === "ACTIVE" && <span class="badge bg-label-success"> ACTIVE </span>}
                                         {ele.status === "DEACTIVE" && <span class="badge bg-label-danger"> DEACTIVE </span>}
@@ -169,12 +174,11 @@ function TeachersModule() {
           </div>
 
 
-          
           <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel1">Create/Update Teacher</h5>
+                  <h5 class="modal-title" id="exampleModalLabel1">Create/Update Cource</h5>
                   <button
                     type="button"
                     class="btn-close"
@@ -185,39 +189,26 @@ function TeachersModule() {
                 <div class="modal-body text-start">
                   <div class="row">
                     <div class="col mb-3">
-                      <label for="teacherName" class="form-label">Teacher Name</label>
-                      <input type="text" id="teacherName" class="form-control" placeholder="Teacher Name" />
+                      <label for="courceName" class="form-label">Cource Name</label>
+                      <input type="text" id="courceName" class="form-control" placeholder="Cource Name" />
                     </div>
                   </div>
                   <div class="row">
                     <div class="col mb-3">
-                      <label for="email" class="form-label">Email</label>
-                      <input type="number" id="email" class="form-control" placeholder="Email" />
+                      <label for="semister" class="form-label">Semister</label>
+                      <input type="number" id="semister" class="form-control" placeholder="Semister count how many sem available for this cources" />
                     </div>
                   </div>
                   <div class="row">
                     <div class="col mb-3">
-                      <label for="period" class="form-label">Phone Number</label>
-                      <div class="input-group">
-                        <span class="input-group-text">+91</span>
-                        <input type="number" class="form-control" placeholder="Phone Number" aria-label="Phone Number" />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div class="col mb-3">
-                      <label for="course" class="form-label">Course</label>
-                      <select class="form-select" id="courseOption">
-                        <option selected="" disabled>--SELECT--</option>
-                        <option value="B.Com">B.Com</option>
-                        <option value="B.Sc">B.Sc</option>
-                      </select>
+                      <label for="period" class="form-label">Period</label>
+                      <input type="number" id="period" class="form-control" placeholder="Period in years" />
                     </div>
                   </div>
                   <div className="row">
                     <div class="col mb-3">
                       <label for="status" class="form-label">Status</label>
-                      <select class="form-select">
+                      <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
                         <option selected="" disabled>--SELECT--</option>
                         <option value="1">ACTIVE</option>
                         <option value="0">DEACTIVE</option>
@@ -242,4 +233,4 @@ function TeachersModule() {
   );
 }
 
-export default TeachersModule;
+export default CourcesModule;

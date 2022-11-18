@@ -33,7 +33,7 @@ function RegisterComponent() {
                                 <div class="row text-start">
                                     <div class="col mb-3">
                                         <label for="email" class="form-label">Email</label>
-                                        <input type="number" id="email" class="form-control" placeholder="Email" />
+                                        <input type="email" id="email" class="form-control" placeholder="Email" />
                                     </div>
                                 </div>
                                 <div class="row text-start">

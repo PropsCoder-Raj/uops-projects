@@ -1,8 +1,8 @@
 import "./style.css";
 import { useEffect } from "react";
-import FooterComponent from "../../Components/Layouts/Footer";
-import SidemenuComponent from "../../Components/Layouts/Sidemenu";
-import AdminNav from "../../Components/Layouts/AdminNav";
+import FooterComponent from "../../../Components/Layouts/Footer";
+import SidemenuComponent from "../../../Components/Layouts/Sidemenu";
+import AdminNav from "../../../Components/Layouts/AdminNav";
 
 function DashboardComponent() {
 
@@ -18,7 +18,7 @@ function DashboardComponent() {
                     <SidemenuComponent />
 
                     <div className="layout-page">
-                        <AdminNav />
+                        <AdminNav profileImgPath="../assets/img/avatars/admin.png" />
                         <div className="content-wrapper">
                             <div className="container-xxl flex-grow-1 container-p-y">
 
