@@ -21,6 +21,7 @@ function AdminNav(props) {
                                 <div class="navbar-nav me-auto">
                                     <Link class={ window.location.pathname === "/teacher-dashboard" ? "nav-item nav-link active" : "nav-item nav-link" } to="/teacher-dashboard">Dashboard</Link>
                                     <Link class={ window.location.pathname === "/teacher-students" ? "nav-item nav-link active" : "nav-item nav-link" } to="/teacher-students">Students</Link>
+                                    <Link class={ window.location.pathname === "/teacher-attendance" ? "nav-item nav-link active" : "nav-item nav-link" } to="/teacher-attendance">Daily Attendance</Link>
                                     <Link class={ window.location.pathname === "/teacher-profile" ? "nav-item nav-link active" : "nav-item nav-link" } to="/teacher-profile">Profile</Link>
                                 </div>
                             }

@@ -9,6 +9,7 @@ import RegisterComponent from './Pages/Auth/Register';
 import TeacherDashboardComponent from './Pages/Teacher/Dashboard';
 import TeacherStudentsModule from './Pages/Teacher/Students';
 import TeacherProfileComponent from './Pages/Teacher/Profile';
+import TeacherAttendanceComponent from './Pages/Teacher/Attendance';
 
 function App() {
   
@@ -24,6 +25,7 @@ function App() {
         <Route path="/teacher-dashboard" element={<TeacherDashboardComponent />} />
         <Route path="/teacher-students" element={<TeacherStudentsModule />} />
         <Route path="/teacher-profile" element={<TeacherProfileComponent />} />
+        <Route path="/teacher-attendance" element={<TeacherAttendanceComponent />} />
 
         <Route path="/login" element={<LoginComponent />} />
         <Route path="/register" element={<RegisterComponent />} />
