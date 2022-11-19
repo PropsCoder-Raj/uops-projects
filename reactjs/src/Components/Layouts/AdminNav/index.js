@@ -15,17 +15,24 @@ function AdminNav(props) {
                 </div>
 
                 <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+                    {
+                        (role === "teacher" || role === "student") && <>
+                            <ul class="navbar-nav flex-row align-items-center">
+                                <li><div className="fw-bold fs-large">UoPS</div></li>
+                            </ul>
+                        </>
+                    }
                     <ul class="navbar-nav flex-row align-items-center ms-auto">
                         <li class="nav-item lh-1 me-3">
-                            { role == "teacher" &&
-                                <div class="navbar-nav me-auto">
+                            { role === "teacher" &&
+                                <div class="navbar-nav me-auto w-100">
                                     <Link class={ window.location.pathname === "/teacher-dashboard" ? "nav-item nav-link active" : "nav-item nav-link" } to="/teacher-dashboard">Dashboard</Link>
                                     <Link class={ window.location.pathname === "/teacher-students" ? "nav-item nav-link active" : "nav-item nav-link" } to="/teacher-students">Students</Link>
                                     <Link class={ window.location.pathname === "/teacher-attendance" ? "nav-item nav-link active" : "nav-item nav-link" } to="/teacher-attendance">Daily Attendance</Link>
                                     <Link class={ window.location.pathname === "/teacher-profile" ? "nav-item nav-link active" : "nav-item nav-link" } to="/teacher-profile">Profile</Link>
                                 </div>
                             }
-                            { role == "student" &&
+                            { role === "student" &&
                                 <div class="navbar-nav me-auto">
                                     <Link class={ window.location.pathname === "/student-dashboard" ? "nav-item nav-link active" : "nav-item nav-link" } to="/student-dashboard">Dashboard</Link>
                                     <Link class={ window.location.pathname === "/student-attendance" ? "nav-item nav-link active" : "nav-item nav-link" } to="/student-attendance">Attendance</Link>
@@ -49,8 +56,8 @@ function AdminNav(props) {
                                                 </div>
                                             </div>
                                             <div class="flex-grow-1">
-                                                <span class="fw-semibold d-block">UoPS {role == "teacher" && "Teacher"} {role == "admin" && "Admin"}</span>
-                                                <small class="text-muted">{role == "teacher" && "Teacher"} {role == "admin" && "Admin"}</small>
+                                                <span class="fw-semibold d-block">UoPS {role === "teacher" && "Teacher"} {role === "admin" && "Admin"}</span>
+                                                <small class="text-muted">{role === "teacher" && "Teacher"} {role === "admin" && "Admin"}</small>
                                             </div>
                                         </div>
                                     </a>
