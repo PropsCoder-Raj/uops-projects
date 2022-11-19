@@ -13,7 +13,7 @@ function StudentProfileComponent() {
     })
 
     useEffect(() => {
-        document.title = "UoPS | Teacher - Profile";
+        document.title = "UoPS | Student - Profile";
     }, [])
 
     return (
@@ -27,7 +27,7 @@ function StudentProfileComponent() {
                             <div className="container-xxl flex-grow-1 container-p-y">
 
 
-                                <h4 class="fw-bold py-3 mb-4 text-start"><span class="text-muted fw-light">Teacher /</span> Profile</h4>
+                                <h4 class="fw-bold py-3 mb-4 text-start"><span class="text-muted fw-light">Student /</span> Profile</h4>
                                 <div className="card">
                                     <div className="card-content p-3">
                                         <div className="row">

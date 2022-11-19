@@ -9,7 +9,7 @@ import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 function StudentAttendanceComponent() {
 
     useEffect(() => {
-        document.title = "UoPS | Teacher - Daily Attendance";
+        document.title = "UoPS | Student - Daily Attendance";
     }, [])
 
     return (
@@ -24,7 +24,7 @@ function StudentAttendanceComponent() {
 
                                 <div className="row">
                                     <div className="col">
-                                        <h4 class="fw-bold py-3 mb-4 text-start"><span class="text-muted fw-light">Teacher /</span> Attendance</h4>
+                                        <h4 class="fw-bold py-3 mb-4 text-start"><span class="text-muted fw-light">Student /</span> Attendance</h4>
                                     </div>
                                     <div className="col-lg-4">
                                     </div>
