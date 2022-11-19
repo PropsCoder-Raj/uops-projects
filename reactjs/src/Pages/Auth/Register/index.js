@@ -46,7 +46,7 @@ function RegisterComponent() {
                                     <div class="col mb-3">
                                         <label for="period" class="form-label">Phone Number</label>
                                         <div class="input-group">
-                                            <span class="input-group-text">+91</span>
+                                            <span class="input-group-text">+44</span>
                                             <input type="number" class="form-control" placeholder="Phone Number" aria-label="Phone Number" />
                                         </div>
                                     </div>

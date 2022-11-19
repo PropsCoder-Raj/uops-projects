@@ -24,7 +24,7 @@ function TeacherDashboardComponent() {
                                 <h4 class="fw-bold py-3 mb-4 text-start"><span class="text-muted fw-light">Teacher /</span> Dashboard</h4>
 
                                 <div className="row">
-                                    <div className="col-lg-12 mb-4 order-0">
+                                    <div className="col-lg-8 mb-4 order-0">
                                         <div className="card">
                                             <div className="d-flex align-items-end row">
                                                 <div className="col-sm-7">
@@ -51,16 +51,21 @@ function TeacherDashboardComponent() {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div>
-
-                                    <div className="offset-lg-3 col-lg-6 col-md-4 order-1">
+                                    <div className="col-lg-4">
                                         <div className="row">
-                                            <div className="offset-lg-4 col-lg-4 col-md-12 mb-4">
-                                                <div className="card">
-                                                    <div className="card-body">
-                                                        <span className="fw-semibold d-block mb-1">Total Students</span>
-                                                        <h3 className="card-title mb-2">30</h3>
+                                            <div class="card">
+                                                <div class="d-flex align-items-end row">
+                                                    <div class="col-8 my-5 pt-1">
+                                                        <div class="card-body text-start">
+                                                            <h3 class="card-title mb-1 text-nowrap">BE in Computer Engineering</h3>
+                                                            <small class="d-block mb-3 text-nowrap">Course</small>
+
+                                                            <h5 class="card-title text-primary mb-1">30</h5>
+                                                            <small class="d-block mb-4 pb-1 text-muted">Total Students</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-4 pt-3 ps-0">
+                                                        <img src="../../assets/img/avatars/student.png" width="100" height="100" class="rounded-start" alt="View Sales" />
                                                     </div>
                                                 </div>
                                             </div>

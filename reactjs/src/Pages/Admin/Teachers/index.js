@@ -92,7 +92,7 @@ function TeachersModule() {
           <SidemenuComponent />
 
           <div className="layout-page">
-            <AdminNav profileImgPath="../assets/img/avatars/admin.png" />
+            <AdminNav profileImgPath="../assets/img/avatars/admin.png" role="admin" />
             <div className="content-wrapper">
               <div className="container-xxl flex-grow-1 container-p-y">
 
@@ -199,7 +199,7 @@ function TeachersModule() {
                     <div class="col mb-3">
                       <label for="period" class="form-label">Phone Number</label>
                       <div class="input-group">
-                        <span class="input-group-text">+91</span>
+                        <span class="input-group-text">+44</span>
                         <input type="number" class="form-control" placeholder="Phone Number" aria-label="Phone Number" />
                       </div>
                     </div>

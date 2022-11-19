@@ -18,7 +18,7 @@ function DashboardComponent() {
                     <SidemenuComponent />
 
                     <div className="layout-page">
-                        <AdminNav profileImgPath="../assets/img/avatars/admin.png" />
+                        <AdminNav profileImgPath="../assets/img/avatars/admin.png" role="admin" />
                         <div className="content-wrapper">
                             <div className="container-xxl flex-grow-1 container-p-y">
 

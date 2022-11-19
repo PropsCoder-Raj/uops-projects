@@ -76,13 +76,13 @@ function TeacherStudentsModule() {
   }, [])
 
   const array = [
-    { name: "Rohit Pandit", email: "rohit@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+91 5487986532', status: "ACTIVE" },
-    { name: "Aditya Pandit", email: "aditya@gmail.com", course: "B.Com", phoneNumber: '+91 9865542145', status: "ACTIVE" },
-    { name: "Pratik", email: "pratik@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+91 4578651278', status: "DEACTIVE" },
-    { name: "Aniket", email: "ani@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+91 5487986532', status: "ACTIVE" },
-    { name: "Suraj P", email: "suraj@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+91 7845568989', status: "ACTIVE" },
-    { name: "Rakesh", email: "rak@gmail.com", course: "B.B.A", phoneNumber: '+91 7878989865', status: "ACTIVE" },
-    { name: "Siddhu", email: "siddhu@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+91 1256234556', status: "ACTIVE" },
+    { name: "Rohit Pandit", email: "rohit@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 5487986532', status: "ACTIVE" },
+    { name: "Aditya Pandit", email: "aditya@gmail.com", course: "B.Com", phoneNumber: '+44 9865542145', status: "ACTIVE" },
+    { name: "Pratik", email: "pratik@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 4578651278', status: "DEACTIVE" },
+    { name: "Aniket", email: "ani@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 5487986532', status: "ACTIVE" },
+    { name: "Suraj P", email: "suraj@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 7845568989', status: "ACTIVE" },
+    { name: "Rakesh", email: "rak@gmail.com", course: "B.B.A", phoneNumber: '+44 7878989865', status: "ACTIVE" },
+    { name: "Siddhu", email: "siddhu@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 1256234556', status: "ACTIVE" },
   ]
 
   return (
@@ -200,7 +200,7 @@ function TeacherStudentsModule() {
                     <div class="col mb-3">
                       <label for="period" class="form-label">Phone Number</label>
                       <div class="input-group">
-                        <span class="input-group-text">+91</span>
+                        <span class="input-group-text">+44</span>
                         <input type="number" class="form-control" placeholder="Phone Number" aria-label="Phone Number" />
                       </div>
                     </div>
