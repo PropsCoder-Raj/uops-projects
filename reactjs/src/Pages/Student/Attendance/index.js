@@ -3,6 +3,9 @@ import { useEffect } from "react";
 import FooterComponent from "../../../Components/Layouts/Footer";
 import AdminNav from "../../../Components/Layouts/AdminNav";
 
+import FullCalendar from '@fullcalendar/react' // must go before plugins
+import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
+
 function StudentAttendanceComponent() {
 
     useEffect(() => {
@@ -29,7 +32,17 @@ function StudentAttendanceComponent() {
                                 <div>
                                     <div className="col-lg-12 col-md-6 order-1">
                                         <div className="row">
-                                            
+                                            <div className="offset-lg-3 col-lg-6">
+                                                <FullCalendar
+                                                    plugins={[ dayGridPlugin ]}
+                                                    initialView="dayGridMonth"
+                                                    weekends={false}
+                                                    events={[
+                                                    { title: 'Present', date: '2022-11-01', className: "badge bg-success border-0" },
+                                                    { title: 'Absent', date: '2022-11-02', className: "badge bg-danger border-0" }
+                                                    ]}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
