@@ -75,13 +75,13 @@ function TeachersModule() {
   }, [])
 
   const array = [
-    { name: "Aniket", email: "ani@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
-    { name: "Suraj P", email: "suraj@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
-    { name: "Rakesh", email: "rak@gmail.com", course: "B.B.A", status: "ACTIVE" },
-    { name: "Aditya Pandit", email: "aditya@gmail.com", course: "B.Com", status: "ACTIVE" },
-    { name: "Pratik", email: "pratik@gmail.com", course: "BE in Computer Engineering", status: "DEACTIVE" },
-    { name: "Siddhu", email: "siddhu@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
-    { name: "Rohit Pandit", email: "rohit@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
+    { name: "Stephen Schwarzman", email: "stephenschwarzman@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
+    { name: "Lee Shau Kee", email: "leeshaukee@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
+    { name: "Jeff Yass", email: "jeffyass@gmail.com", course: "B.B.A", status: "ACTIVE" },
+    { name: "Andrey Melnichenko", email: "andreymelnichenko@gmail.com", course: "B.Com", status: "ACTIVE" },
+    { name: "Jim Simons", email: "jimsimons@gmail.com", course: "BE in Computer Engineering", status: "DEACTIVE" },
+    { name: "Robin Zeng", email: "robinzeng@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
+    { name: "Gina Rinehart", email: "gina@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
   ]
 
   return (

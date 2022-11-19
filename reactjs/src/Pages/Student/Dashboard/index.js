@@ -1,13 +1,12 @@
 import "./style.css";
 import { useEffect } from "react";
 import FooterComponent from "../../../Components/Layouts/Footer";
-import SidemenuComponent from "../../../Components/Layouts/Sidemenu";
 import AdminNav from "../../../Components/Layouts/AdminNav";
 
-function TeacherDashboardComponent() {
+function StudentDashboardComponent() {
 
     useEffect(() => {
-        document.title = "UoPS | Teacher - Dashboard";
+        document.title = "UoPS | Student - Dashboard";
     }, [])
 
     return (
@@ -16,12 +15,12 @@ function TeacherDashboardComponent() {
                 <div className="layout-container">
 
                     <div className="layout-page">
-                        <AdminNav profileImgPath="../assets/img/avatars/mentor.png" role="teacher" />
+                        <AdminNav profileImgPath="../assets/img/avatars/student.png" role="student" />
                         <div className="content-wrapper">
                             <div className="container-xxl flex-grow-1 container-p-y">
 
 
-                                <h4 class="fw-bold py-3 mb-4 text-start"><span class="text-muted fw-light">Teacher /</span> Dashboard</h4>
+                                <h4 class="fw-bold py-3 mb-4 text-start"><span class="text-muted fw-light">Student /</span> Dashboard</h4>
 
                                 <div className="row">
                                     <div className="col-lg-8 mb-4 order-0">
@@ -56,12 +55,9 @@ function TeacherDashboardComponent() {
                                             <div class="card"  style={{height: "18rem"}}>
                                                 <div class="d-flex align-items-end row">
                                                     <div class="col-8 my-5 pt-1">
-                                                        <div class="card-body text-start">
+                                                        <div class="card-body text-start mb-5">
                                                             <h3 class="card-title mb-1 text-nowrap">BE in Computer Engineering</h3>
                                                             <small class="d-block mb-3 text-nowrap">Course</small>
-
-                                                            <h5 class="card-title text-primary mb-1">30</h5>
-                                                            <small class="d-block mb-4 pb-1 text-muted">Total Students</small>
                                                         </div>
                                                     </div>
                                                     <div class="col-4 pt-3 ps-0">
@@ -86,4 +82,4 @@ function TeacherDashboardComponent() {
         </>
     );
 }
-export default TeacherDashboardComponent;
+export default StudentDashboardComponent;

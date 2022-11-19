@@ -4,11 +4,11 @@ import FooterComponent from "../../../Components/Layouts/Footer";
 import SidemenuComponent from "../../../Components/Layouts/Sidemenu";
 import AdminNav from "../../../Components/Layouts/AdminNav";
 
-function TeacherProfileComponent() {
+function StudentProfileComponent() {
 
     const [details, setDetails] = useState({
-        name: "Li Ka-shing",
-        email: "liKa-shing@gmail.com",
+        name: "Gerard Wertheimer",
+        email: "gerardwertheimer@gmail.com",
         phoneNumber: "7038415053",
     })
 
@@ -22,7 +22,7 @@ function TeacherProfileComponent() {
                 <div className="layout-container">
 
                     <div className="layout-page">
-                        <AdminNav profileImgPath="../assets/img/avatars/mentor.png" role="teacher" />
+                        <AdminNav profileImgPath="../assets/img/avatars/student.png" role="student" />
                         <div className="content-wrapper">
                             <div className="container-xxl flex-grow-1 container-p-y">
 
@@ -94,4 +94,4 @@ function TeacherProfileComponent() {
         </>
     );
 }
-export default TeacherProfileComponent;
+export default StudentProfileComponent;

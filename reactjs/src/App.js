@@ -10,6 +10,10 @@ import TeacherDashboardComponent from './Pages/Teacher/Dashboard';
 import TeacherStudentsModule from './Pages/Teacher/Students';
 import TeacherProfileComponent from './Pages/Teacher/Profile';
 import TeacherAttendanceComponent from './Pages/Teacher/Attendance';
+import TeacherTakeAttendaceModule from './Pages/Teacher/Take-Attendance';
+import StudentDashboardComponent from './Pages/Student/Dashboard';
+import StudentProfileComponent from './Pages/Student/Profile';
+import StudentAttendanceComponent from './Pages/Student/Attendance';
 
 function App() {
   
@@ -26,6 +30,11 @@ function App() {
         <Route path="/teacher-students" element={<TeacherStudentsModule />} />
         <Route path="/teacher-profile" element={<TeacherProfileComponent />} />
         <Route path="/teacher-attendance" element={<TeacherAttendanceComponent />} />
+        <Route path="/teacher-take-attendance" element={<TeacherTakeAttendaceModule />} />
+        
+        <Route path="/student-dashboard" element={<StudentDashboardComponent />} />
+        <Route path="/student-profile" element={<StudentProfileComponent />} />
+        <Route path="/student-attendance" element={<StudentAttendanceComponent />} />
 
         <Route path="/login" element={<LoginComponent />} />
         <Route path="/register" element={<RegisterComponent />} />

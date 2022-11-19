@@ -25,6 +25,13 @@ function AdminNav(props) {
                                     <Link class={ window.location.pathname === "/teacher-profile" ? "nav-item nav-link active" : "nav-item nav-link" } to="/teacher-profile">Profile</Link>
                                 </div>
                             }
+                            { role == "student" &&
+                                <div class="navbar-nav me-auto">
+                                    <Link class={ window.location.pathname === "/student-dashboard" ? "nav-item nav-link active" : "nav-item nav-link" } to="/student-dashboard">Dashboard</Link>
+                                    <Link class={ window.location.pathname === "/student-attendance" ? "nav-item nav-link active" : "nav-item nav-link" } to="/student-attendance">Attendance</Link>
+                                    <Link class={ window.location.pathname === "/student-profile" ? "nav-item nav-link active" : "nav-item nav-link" } to="/student-profile">Profile</Link>
+                                </div>
+                            }
                         </li>
                         <li class="nav-item navbar-dropdown dropdown-user dropdown">
                             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false">

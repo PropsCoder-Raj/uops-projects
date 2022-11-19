@@ -76,13 +76,13 @@ function StudentsModule() {
   }, [])
 
   const array = [
-    { name: "Rohit Pandit", email: "rohit@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 5487986532', status: "ACTIVE" },
-    { name: "Aditya Pandit", email: "aditya@gmail.com", course: "B.Com", phoneNumber: '+44 9865542145', status: "ACTIVE" },
-    { name: "Pratik", email: "pratik@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 4578651278', status: "DEACTIVE" },
-    { name: "Aniket", email: "ani@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 5487986532', status: "ACTIVE" },
-    { name: "Suraj P", email: "suraj@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 7845568989', status: "ACTIVE" },
-    { name: "Rakesh", email: "rak@gmail.com", course: "B.B.A", phoneNumber: '+44 7878989865', status: "ACTIVE" },
-    { name: "Siddhu", email: "siddhu@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 1256234556', status: "ACTIVE" },
+    { name: "Gina Rinehart", email: "gina@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 5487986532', status: "ACTIVE" },
+    { name: "Andrey Melnichenko", email: "andreymelnichenko@gmail.com", course: "B.Com", phoneNumber: '+44 9865542145', status: "ACTIVE" },
+    { name: "Jim Simons", email: "jimsimons@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 4578651278', status: "DEACTIVE" },
+    { name: "Stephen Schwarzman", email: "stephenschwarzman@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 5487986532', status: "ACTIVE" },
+    { name: "Lee Shau Kee", email: "leeshaukee@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 7845568989', status: "ACTIVE" },
+    { name: "Jeff Yass", email: "jeffyass@gmail.com", course: "B.B.A", phoneNumber: '+44 7878989865', status: "ACTIVE" },
+    { name: "Robin Zeng", email: "robinzeng@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 1256234556', status: "ACTIVE" },
   ]
 
   return (
