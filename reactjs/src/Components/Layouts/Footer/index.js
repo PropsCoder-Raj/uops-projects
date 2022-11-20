@@ -7,8 +7,6 @@ function FooterComponent() {
                     <div className="mb-2 mb-md-0">
                         ©
                         {new Date().getFullYear()}
-                        , made with by&nbsp;
-                        <a href="https://rohit-dex.netlify.app/" target="_blank" className="footer-link fw-bolder">Rohit💻Dev</a>
                     </div>
                 </div>
             </footer>
