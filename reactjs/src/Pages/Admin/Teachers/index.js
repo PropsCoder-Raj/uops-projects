@@ -75,13 +75,13 @@ function TeachersModule() {
   }, [])
 
   const array = [
-    { name: "Aniket", email: "ani@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
-    { name: "Suraj P", email: "suraj@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
-    { name: "Rakesh", email: "rak@gmail.com", course: "B.B.A", status: "ACTIVE" },
-    { name: "Aditya Pandit", email: "aditya@gmail.com", course: "B.Com", status: "ACTIVE" },
-    { name: "Pratik", email: "pratik@gmail.com", course: "BE in Computer Engineering", status: "DEACTIVE" },
-    { name: "Siddhu", email: "siddhu@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
-    { name: "Rohit Pandit", email: "rohit@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
+    { name: "Stephen Schwarzman", email: "stephenschwarzman@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
+    { name: "Lee Shau Kee", email: "leeshaukee@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
+    { name: "Jeff Yass", email: "jeffyass@gmail.com", course: "B.B.A", status: "ACTIVE" },
+    { name: "Andrey Melnichenko", email: "andreymelnichenko@gmail.com", course: "B.Com", status: "ACTIVE" },
+    { name: "Jim Simons", email: "jimsimons@gmail.com", course: "BE in Computer Engineering", status: "DEACTIVE" },
+    { name: "Robin Zeng", email: "robinzeng@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
+    { name: "Gina Rinehart", email: "gina@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
   ]
 
   return (
@@ -92,7 +92,7 @@ function TeachersModule() {
           <SidemenuComponent />
 
           <div className="layout-page">
-            <AdminNav profileImgPath="../assets/img/avatars/admin.png" />
+            <AdminNav profileImgPath="../assets/img/avatars/admin.png" role="admin" />
             <div className="content-wrapper">
               <div className="container-xxl flex-grow-1 container-p-y">
 
@@ -199,7 +199,7 @@ function TeachersModule() {
                     <div class="col mb-3">
                       <label for="period" class="form-label">Phone Number</label>
                       <div class="input-group">
-                        <span class="input-group-text">+91</span>
+                        <span class="input-group-text">+44</span>
                         <input type="number" class="form-control" placeholder="Phone Number" aria-label="Phone Number" />
                       </div>
                     </div>

@@ -1,19 +1,18 @@
 import "./style.css";
 import { useEffect, useState } from "react";
-import FooterComponent from "../../../Components/Layouts/Footer";
-import SidemenuComponent from "../../../Components/Layouts/Sidemenu";
+import FooterComponent from "../../../Components/Layouts/Footer"
 import AdminNav from "../../../Components/Layouts/AdminNav";
 
-function TeacherProfileComponent() {
+function StudentProfileComponent() {
 
     const [details, setDetails] = useState({
-        name: "Li Ka-shing",
-        email: "liKa-shing@gmail.com",
+        name: "Gerard Wertheimer",
+        email: "gerardwertheimer@gmail.com",
         phoneNumber: "7038415053",
     })
 
     useEffect(() => {
-        document.title = "UoPS | Teacher - Profile";
+        document.title = "UoPS | Student - Profile";
     }, [])
 
     return (
@@ -22,12 +21,12 @@ function TeacherProfileComponent() {
                 <div className="layout-container">
 
                     <div className="layout-page">
-                        <AdminNav profileImgPath="../assets/img/avatars/mentor.png" role="teacher" />
+                        <AdminNav profileImgPath="../assets/img/avatars/student.png" role="student" />
                         <div className="content-wrapper">
                             <div className="container-xxl flex-grow-1 container-p-y">
 
 
-                                <h4 class="fw-bold py-3 mb-4 text-start"><span class="text-muted fw-light">Teacher /</span> Profile</h4>
+                                <h4 class="fw-bold py-3 mb-4 text-start"><span class="text-muted fw-light">Student /</span> Profile</h4>
                                 <div className="card">
                                     <div className="card-content p-3">
                                         <div className="row">
@@ -94,4 +93,4 @@ function TeacherProfileComponent() {
         </>
     );
 }
-export default TeacherProfileComponent;
+export default StudentProfileComponent;
