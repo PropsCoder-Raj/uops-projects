@@ -20,17 +20,28 @@ const userSchema = new mongoose.Schema({
     required: [true, "Please provide an password"],
     select: false,
   },
+  phoneNumber: {
+    type: String,
+    required: [true, "Please provide an phonen number"],
+    select: false,
+  },
+  courseId: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "course",
+    required: [true, "Please provide an any course"],
+    select: false,
+  }],
   role: {
     type: Number,
-    default: 0,
+    default: 0, // 0: Admin, 1: Teacher, 2: Student
+  },
+  status: {
+    type: Number,
+    default: 1, // 0: Inactive, 1: Active
   },
   forgotPasswordToken: String,
   forgotPasswordExpiry: Date,
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-});
+}, { timestamps: true });
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();

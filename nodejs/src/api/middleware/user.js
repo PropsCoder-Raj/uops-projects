@@ -1,5 +1,5 @@
 const BigPromise = require("./BigPromise");
-const User = require("../model/user");
+const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 
 exports.isLoggedIn = BigPromise(async (req, res, next) => {

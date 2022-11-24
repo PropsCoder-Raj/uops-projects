@@ -1,9 +1,8 @@
-const User = require("../model/user");
+const User = require("../models/user");
 const BigPromise = require("../middleware/BigPromise");
 const cookieToken = require("../util/cookieToken");
 const emailHelper = require("../util/emailHelper");
 const crypto = require("crypto");
-const logger = require("../logger");
 
 exports.signup = BigPromise(async (req, res, next) => {
   const { name, email, password } = req.body;

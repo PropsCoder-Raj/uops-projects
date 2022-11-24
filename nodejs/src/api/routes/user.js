@@ -6,7 +6,7 @@ const {
   forgotPassword,
   passwordReset,
   changePassword,
-} = require("../controller/user");
+} = require("../controllers/user");
 const { isLoggedIn } = require("../middleware/user");
 const router = express.Router();
 

@@ -5,10 +5,13 @@ const cors = require('cors');
 
 require('dotenv').config();
 
+const connectWithDb = require("./api/config/db");
 const middlewares = require('./api/middleware/errorMiddleware');
-const api = require('./api');
+const api = require('./api/routes/user');
 
 const app = express();
+
+connectWithDb(); // Connect to the database
 
 app.use(morgan('dev'));
 app.use(helmet());
