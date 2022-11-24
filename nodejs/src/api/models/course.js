@@ -6,11 +6,11 @@ const courseSchema = new mongoose.Schema({
     maxlength: [40, "Course Name should be under 40 characters"],
   },
   semester: {
-    type: String,
+    type: Number,
     required: [true, "Please provide an semester count"],
   },
   period: {
-    type: String,
+    type: Number,
     required: [true, "Please provide an period count"],
   },
   status: {

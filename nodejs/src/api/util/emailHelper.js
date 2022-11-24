@@ -10,7 +10,7 @@ const emailHelper = async (option) => {
   });
 
   const message = {
-    from: "conatact@gratustech.com",
+    from: "rohit.pandit@indicchain.com",
     to: option.email,
     subject: option.subject,
     text: option.message,

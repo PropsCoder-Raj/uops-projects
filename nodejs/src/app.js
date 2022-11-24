@@ -7,7 +7,6 @@ require('dotenv').config();
 
 const connectWithDb = require("./api/config/db");
 const middlewares = require('./api/middleware/errorMiddleware');
-const api = require('./api/routes/user');
 
 const app = express();
 
@@ -24,7 +23,8 @@ app.get('/', (req, res) => {
   });
 });
 
-app.use('/api/v1', api);
+app.use('/api/v1/user', require('./api/routes/user')); // User routes
+app.use('/api/v1/course', require('./api/routes/course')); // Course routes
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
