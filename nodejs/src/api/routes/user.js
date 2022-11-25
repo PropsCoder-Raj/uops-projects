@@ -5,6 +5,7 @@ const {
   getStudents,
   getTeachers,
   getSingleUser,
+  updateUser,
   forgotPassword,
   passwordReset,
   changePassword,
@@ -17,6 +18,7 @@ router.route("/signin").post(signin);
 router.route("/students").get(getStudents);
 router.route("/teachers").get(getTeachers);
 router.route("/single/:_id").get(getSingleUser);
+router.route("/single/:_id").put(updateUser);
 // router.route("/forgotpassword").post(forgotPassword);
 // router.route("/password/reset/:token").post(passwordReset);
 // router.route("/change/password").post(isLoggedIn, changePassword);

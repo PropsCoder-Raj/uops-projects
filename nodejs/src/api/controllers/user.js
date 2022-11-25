@@ -72,6 +72,29 @@ exports.getSingleUser = BigPromise(async (req, res, next) => {
 });
 
 
+exports.updateUser = BigPromise(async (req, res, next) => {
+  const { _id } = req.params;
+  const { name, email, phoneNumber, courseId, status } = req.body;
+
+  if (!_id) {
+    return next(new Error("Please enter user _id"));
+  }
+
+  if (!name) { return next(new Error("Please enter name")); }
+  if (!email) { return next(new Error("Please enter email")); }
+  if (!phoneNumber) { return next(new Error("Please enter phone number")); }
+  if (!courseId) { return next(new Error("Please select course")); }
+  if (!status) { return next(new Error("Please select status")); }
+
+  const user = await User.find({_id: _id});
+  if (!user) {
+    return next(new Error("User does not exist"));
+  }
+
+  const newUser = await User.findOneAndUpdate({_id: _id}, { $set: req.body }, { new: true });
+  return res.status(200).send({ success: true, message: "Update user deatails successfully.", data: newUser });
+});
+
 
 
 
