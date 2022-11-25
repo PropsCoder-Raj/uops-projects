@@ -4,20 +4,30 @@ const cookieToken = require("../util/cookieToken");
 const emailHelper = require("../util/emailHelper");
 const crypto = require("crypto");
 
-exports.signup = BigPromise(async (req, res, next) => {
-  const { name, email, password } = req.body;
+exports.createUser = BigPromise(async (req, res, next) => {
+  const { name, email, password, phoneNumber, courseId, role, status } = req.body;
 
-  if (!email) {
-    return next(new Error("Please enter email"));
-  }
+  if (!name) { return next(new Error("Please enter name")); }
+  if (!email) { return next(new Error("Please enter email")); }
+  if (!password) { return next(new Error("Please enter password")); }
+  if (!phoneNumber) { return next(new Error("Please enter phone number")); }
+  if (!courseId) { return next(new Error("Please select course")); }
+  if (!role) { return next(new Error("Please select role")); }
+  if (!status) { return next(new Error("Please select status")); }
+  
   const user = await User.create({
     name,
     email,
     password,
+    phoneNumber,
+    courseId,
+    role,
+    status
   });
   user.password = undefined;
   cookieToken(user, res);
 });
+
 
 exports.signin = BigPromise(async (req, res, next) => {
   const { email, password } = req.body;
@@ -123,8 +133,4 @@ exports.changePassword = BigPromise(async (req, res, next) => {
   user.password = password;
   await user.save();
   cookieToken(user, res);
-});
-
-exports.home = BigPromise((req, res) => {
-  res.json({ message: "Hello From Harshad..." });
 });

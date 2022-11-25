@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   },
   phoneNumber: {
     type: String,
-    required: [true, "Please provide an phonen number"],
+    required: [true, "Please provide an phone number"],
     select: false,
   },
   courseId: [{
@@ -53,7 +53,7 @@ userSchema.methods.isValidatedPassword = async function (userPassword) {
 };
 
 userSchema.methods.getJwtToken = function () {
-  return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+  return jwt.sign({ id: this._id, role: this.role }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRY,
   });
 };
