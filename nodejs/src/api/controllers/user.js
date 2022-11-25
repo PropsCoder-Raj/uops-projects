@@ -28,7 +28,6 @@ exports.createUser = BigPromise(async (req, res, next) => {
   cookieToken(user, res);
 });
 
-
 exports.signin = BigPromise(async (req, res, next) => {
   const { email, password } = req.body;
 
@@ -49,6 +48,33 @@ exports.signin = BigPromise(async (req, res, next) => {
   cookieToken(user, res);
   logger.info(`Signin IP ${req.ip} of ${user.email}`);
 });
+
+exports.getStudents = BigPromise(async (req, res, next) => {
+  const users = await User.find({role: 2});
+  return res.status(200).send({ success: true, message: "Get all students successfully.", data: users });
+});
+
+exports.getTeachers = BigPromise(async (req, res, next) => {
+  const users = await User.find({role: 1});
+  return res.status(200).send({ success: true, message: "Get all teachers successfully.", data: users });
+});
+
+
+exports.getSingleUser = BigPromise(async (req, res, next) => {
+  const { _id } = req.params;
+
+  if (!_id) {
+    return next(new Error("Please enter user _id"));
+  }
+
+  const users = await User.find({_id: _id});
+  return res.status(200).send({ success: true, message: "Get single user deatails successfully.", data: users });
+});
+
+
+
+
+
 
 exports.forgotPassword = BigPromise(async (req, res, next) => {
   const { email } = req.body;
