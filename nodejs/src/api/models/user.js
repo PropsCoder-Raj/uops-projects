@@ -22,13 +22,11 @@ const userSchema = new mongoose.Schema({
   },
   phoneNumber: {
     type: String,
-    required: [true, "Please provide an phone number"],
     select: false,
   },
   courseId: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "course",
-    required: [true, "Please provide an any course"],
     select: false,
   }],
   role: {
@@ -70,5 +68,32 @@ userSchema.methods.getForgotPasswordToken = function () {
 
   return forgotToken;
 };
+
+
+mongoose.model("User", userSchema).find({ role: 0 }, async (err, result) => {
+  if (err) {
+    console.log("❤️ When Default admin creation error :", err);
+  }
+  else if (result.length != 0) {
+    console.log("💚 Default Admin.");
+  }
+  else {
+    let obj = {
+      name: "admin",
+      role: 0,
+      email: "admin@gmail.com",
+      password: "Admin@123",
+      status: 1
+    };
+    mongoose.model("User", userSchema).create(obj, async (err1, result1) => {
+      if (err1) {
+        console.log("❤️ When Default admin creation error : ", err1);
+      } else {
+        console.log("💚 Default admin Created", result1);
+      }
+    });
+  }
+});
+
 
 module.exports = mongoose.model("User", userSchema);
