@@ -22,12 +22,10 @@ const userSchema = new mongoose.Schema({
   },
   phoneNumber: {
     type: String,
-    select: false,
   },
   courseId: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: "course",
-    select: false,
   }],
   role: {
     type: Number,

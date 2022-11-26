@@ -25,6 +25,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/v1/user', require('./api/routes/user')); // User routes
 app.use('/api/v1/course', require('./api/routes/course')); // Course routes
+app.use('/api/v1/attendance', require('./api/routes/attendance')); // Course routes
 
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
