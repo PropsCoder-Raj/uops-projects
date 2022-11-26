@@ -5,10 +5,15 @@ import SidemenuComponent from "../../../Components/Layouts/Sidemenu";
 import AdminNav from "../../../Components/Layouts/AdminNav";
 import $ from "jquery";
 
+import { useSelector, useDispatch } from "react-redux";
+import { setCourses } from "../../../Actions/index"
 import toast from 'react-hot-toast';
 import { createCourse, getCourses } from "../../../Services/api/course";
 
 function CourcesModule() {
+
+  const dispatch = useDispatch();
+  const courseSelector = useSelector((state) => state.courseReducer);
 
   const [addEdit, setAddEdit] = useState(0);
   const [name, setName] = useState("");
@@ -16,7 +21,6 @@ function CourcesModule() {
   const [period, setPeriod] = useState(0);
   const [status, setStatus] = useState(1);
   const [loader, setLoader] = useState(false);
-  const [data, setData] = useState([]);
 
   useEffect(() => {
     document.title = "UoPS | Admin - Course Module";
@@ -58,10 +62,10 @@ function CourcesModule() {
     const res = await getCourses();
     console.log("res, ", res)
     if (res.status === 200) {
-      setData(res.data.data);
+      dispatch(setCourses(res.data.data))
       dataTableApply();
     } else if (res.status === 500) {
-      setData([]);
+      dispatch(setCourses([]))
       dataTableApply();
     }
   }
@@ -182,7 +186,7 @@ function CourcesModule() {
                             </thead>
                             <tbody className="table-border-bottom-0">
                               {
-                                data.map((ele, index) => {
+                                courseSelector.map((ele, index) => {
                                   return (<>
                                     <tr>
                                       <td>{index + 1}</td>
