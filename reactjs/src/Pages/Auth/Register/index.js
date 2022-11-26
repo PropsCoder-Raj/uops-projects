@@ -24,37 +24,37 @@ function RegisterComponent() {
                                         <span className="app-brand-text demo text-body fw-bolder" style={{ textTransform: "capitalize" }}>UoPS</span>
                                     </a>
                                 </div>
-                                <div class="row text-start">
-                                    <div class="col mb-3">
-                                        <label for="Name" class="form-label">Name</label>
-                                        <input type="text" id="Name" class="form-control" placeholder="Name" />
+                                <div className="row text-start">
+                                    <div className="col mb-3">
+                                        <label htmlFor="Name" className="form-label">Name</label>
+                                        <input type="text" id="Name" className="form-control" placeholder="Name" />
                                     </div>
                                 </div>
-                                <div class="row text-start">
-                                    <div class="col mb-3">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input type="email" id="email" class="form-control" placeholder="Email" />
+                                <div className="row text-start">
+                                    <div className="col mb-3">
+                                        <label htmlFor="email" className="form-label">Email</label>
+                                        <input type="email" id="email" className="form-control" placeholder="Email" />
                                     </div>
                                 </div>
-                                <div class="row text-start">
-                                    <div class="col mb-3">
-                                        <label for="password" class="form-label">Password</label>
-                                        <input type="password" id="password" class="form-control" placeholder="Password" />
+                                <div className="row text-start">
+                                    <div className="col mb-3">
+                                        <label htmlFor="password" className="form-label">Password</label>
+                                        <input type="password" id="password" className="form-control" placeholder="Password" />
                                     </div>
                                 </div>
-                                <div class="row text-start">
-                                    <div class="col mb-3">
-                                        <label for="period" class="form-label">Phone Number</label>
-                                        <div class="input-group">
-                                            <span class="input-group-text">+44</span>
-                                            <input type="number" class="form-control" placeholder="Phone Number" aria-label="Phone Number" />
+                                <div className="row text-start">
+                                    <div className="col mb-3">
+                                        <label htmlFor="period" className="form-label">Phone Number</label>
+                                        <div className="input-group">
+                                            <span className="input-group-text">+44</span>
+                                            <input type="number" className="form-control" placeholder="Phone Number" aria-label="Phone Number" />
                                         </div>
                                     </div>
                                 </div>
                                 <div className="row text-start">
-                                    <div class="col mb-3">
-                                        <label for="course" class="form-label">Course</label>
-                                        <select class="form-select" id="courseOption">
+                                    <div className="col mb-3">
+                                        <label htmlFor="course" className="form-label">Course</label>
+                                        <select className="form-select" id="courseOption">
                                             <option selected="" disabled>--SELECT--</option>
                                             <option value="B.Com">B.Com</option>
                                             <option value="B.Sc">B.Sc</option>
@@ -62,9 +62,9 @@ function RegisterComponent() {
                                     </div>
                                 </div>
                                 <div className="row text-start">
-                                    <div class="col mb-3">
-                                        <label for="status" class="form-label">Status</label>
-                                        <select class="form-select">
+                                    <div className="col mb-3">
+                                        <label htmlFor="status" className="form-label">Status</label>
+                                        <select className="form-select">
                                             <option selected="" disabled>--SELECT--</option>
                                             <option value="1">ACTIVE</option>
                                             <option value="0">DEACTIVE</option>
@@ -72,9 +72,9 @@ function RegisterComponent() {
                                     </div>
                                 </div>
                                 <div className="row text-start">
-                                    <div class="col mb-3">
-                                        <label for="status" class="form-label">Role</label>
-                                        <select class="form-select">
+                                    <div className="col mb-3">
+                                        <label htmlFor="status" className="form-label">Role</label>
+                                        <select className="form-select">
                                             <option selected="" disabled>--SELECT--</option>
                                             <option value="Student">Student</option>
                                             <option value="Teacher">Teacher</option>
@@ -84,7 +84,7 @@ function RegisterComponent() {
                                 <div className="mb-3">
                                     <button className="btn btn-primary d-grid w-100" onClick={register}>Register</button>
                                 </div>
-                                <p class="text-center">
+                                <p className="text-center">
                                     <span>Already have an account?</span>&nbsp;
                                     <Link to="/login">
                                         <span>Sign in method</span>

@@ -20,7 +20,7 @@ function StudentDashboardComponent() {
                             <div className="container-xxl flex-grow-1 container-p-y">
 
 
-                                <h4 class="fw-bold py-3 mb-4 text-start"><span class="text-muted fw-light">Student /</span> Dashboard</h4>
+                                <h4 className="fw-bold py-3 mb-4 text-start"><span className="text-muted fw-light">Student /</span> Dashboard</h4>
 
                                 <div className="row">
                                     <div className="col-lg-8 mb-4 order-0">
@@ -52,16 +52,16 @@ function StudentDashboardComponent() {
                                     </div>
                                     <div className="col-lg-4">
                                         <div className="row">
-                                            <div class="card"  style={{height: "18rem"}}>
-                                                <div class="d-flex align-items-end row">
-                                                    <div class="col-8 my-5 pt-1">
-                                                        <div class="card-body text-start mb-5">
-                                                            <h3 class="card-title mb-1 text-nowrap">BE in Computer Engineering</h3>
-                                                            <small class="d-block mb-3 text-nowrap">Course</small>
+                                            <div className="card"  style={{height: "18rem"}}>
+                                                <div className="d-flex align-items-end row">
+                                                    <div className="col-8 my-5 pt-1">
+                                                        <div className="card-body text-start mb-5">
+                                                            <h3 className="card-title mb-1 text-nowrap">BE in Computer Engineering</h3>
+                                                            <small className="d-block mb-3 text-nowrap">Course</small>
                                                         </div>
                                                     </div>
-                                                    <div class="col-4 pt-3 ps-0">
-                                                        <img src="../../assets/img/avatars/student.png" width="100" height="100" class="rounded-start" alt="View Sales" />
+                                                    <div className="col-4 pt-3 ps-0">
+                                                        <img src="../../assets/img/avatars/student.png" width="100" height="100" className="rounded-start" alt="View Sales" />
                                                     </div>
                                                 </div>
                                             </div>

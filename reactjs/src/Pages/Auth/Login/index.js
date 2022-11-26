@@ -1,15 +1,28 @@
 import "./style.css";
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
+import toast from 'react-hot-toast';
+import { loginAuth } from "../../../Services/api/auth"
 
 function LoginComponent() {
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     useEffect(() => {
         document.title = "UoPS | Login";
     }, [])
 
-    const login = () => {
-        window.location = "/admin-dashboard";
+    const login = async() => {
+        const res = await loginAuth(email, password);
+        console.log("res :", res)
+        if (res.status === 200) {
+            toast.success("Login successful");
+            localStorage.setItem("token", res.data.token);
+            localStorage.setItem("userId", res.data.user._id);
+        }else if(res.status === 500){
+            toast.error(res.data.message);
+        }
     }
 
     return (
@@ -26,7 +39,7 @@ function LoginComponent() {
                                 </div>
                                 <div className="mb-3">
                                     <div className="d-flex justify-content-between">
-                                        <label className="form-label" for="Email">Email</label>
+                                        <label className="form-label" htmlFor="Email">Email</label>
                                     </div>
                                     <input
                                         type="text"
@@ -34,12 +47,13 @@ function LoginComponent() {
                                         id="email"
                                         name="email-username"
                                         placeholder="Enter your email or username"
-                                        autofocus
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        autoFocus
                                     />
                                 </div>
                                 <div className="mb-3 form-password-toggle">
                                     <div className="d-flex justify-content-between">
-                                        <label className="form-label" for="password">Password</label>
+                                        <label className="form-label" htmlFor="password">Password</label>
                                     </div>
                                     <div className="input-group input-group-merge">
                                         <input
@@ -47,6 +61,7 @@ function LoginComponent() {
                                             id="password"
                                             className="form-control"
                                             name="password"
+                                            onChange={(e) => setPassword(e.target.value)}
                                             placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                                             aria-describedby="password"
                                         />
@@ -56,7 +71,7 @@ function LoginComponent() {
                                 <div className="mb-3">
                                     <button className="btn btn-primary d-grid w-100" onClick={login}>Login</button>
                                 </div>
-                                <p class="text-center">
+                                <p className="text-center">
                                     <span>New on our platform?</span>&nbsp;
                                     <Link to="/register">
                                         <span>Create an account</span>

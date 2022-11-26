@@ -15,31 +15,36 @@ import StudentDashboardComponent from './Pages/Student/Dashboard';
 import StudentProfileComponent from './Pages/Student/Profile';
 import StudentAttendanceComponent from './Pages/Student/Attendance';
 
+import { Toaster } from 'react-hot-toast';
+
 function App() {
   
   return (
-    <div className="App">
-      <Routes>
-        <Route path='/' element={ <Navigate to="/login" /> }/>
-        <Route path="/admin-dashboard" element={<DashboardComponent />} />
-        <Route path="/admin-teachers-module" element={<TeachersModule />} />
-        <Route path="/admin-students-module" element={<StudentsModule />} />
-        <Route path="/admin-courses-module" element={<CoursesModule />} />
+    <>
+      <Toaster />
+      <div className="App">
+        <Routes>
+          <Route path='/' element={ <Navigate to="/login" /> }/>
+          <Route path="/admin-dashboard" element={<DashboardComponent />} />
+          <Route path="/admin-teachers-module" element={<TeachersModule />} />
+          <Route path="/admin-students-module" element={<StudentsModule />} />
+          <Route path="/admin-courses-module" element={<CoursesModule />} />
 
-        <Route path="/teacher-dashboard" element={<TeacherDashboardComponent />} />
-        <Route path="/teacher-students" element={<TeacherStudentsModule />} />
-        <Route path="/teacher-profile" element={<TeacherProfileComponent />} />
-        <Route path="/teacher-attendance" element={<TeacherAttendanceComponent />} />
-        <Route path="/teacher-take-attendance" element={<TeacherTakeAttendaceModule />} />
-        
-        <Route path="/student-dashboard" element={<StudentDashboardComponent />} />
-        <Route path="/student-profile" element={<StudentProfileComponent />} />
-        <Route path="/student-attendance" element={<StudentAttendanceComponent />} />
+          <Route path="/teacher-dashboard" element={<TeacherDashboardComponent />} />
+          <Route path="/teacher-students" element={<TeacherStudentsModule />} />
+          <Route path="/teacher-profile" element={<TeacherProfileComponent />} />
+          <Route path="/teacher-attendance" element={<TeacherAttendanceComponent />} />
+          <Route path="/teacher-take-attendance" element={<TeacherTakeAttendaceModule />} />
+          
+          <Route path="/student-dashboard" element={<StudentDashboardComponent />} />
+          <Route path="/student-profile" element={<StudentProfileComponent />} />
+          <Route path="/student-attendance" element={<StudentAttendanceComponent />} />
 
-        <Route path="/login" element={<LoginComponent />} />
-        <Route path="/register" element={<RegisterComponent />} />
-      </Routes>
-    </div>
+          <Route path="/login" element={<LoginComponent />} />
+          <Route path="/register" element={<RegisterComponent />} />
+        </Routes>
+      </div>
+    </>  
   );
 }
 

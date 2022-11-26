@@ -23,7 +23,7 @@ function DashboardComponent() {
                             <div className="container-xxl flex-grow-1 container-p-y">
 
 
-                                <h4 class="fw-bold py-3 mb-4 text-start"><span class="text-muted fw-light">Admin /</span> Dashboard</h4>
+                                <h4 className="fw-bold py-3 mb-4 text-start"><span className="text-muted fw-light">Admin /</span> Dashboard</h4>
 
                                 <div className="row">
                                     <div className="col-lg-12 mb-4 order-0">

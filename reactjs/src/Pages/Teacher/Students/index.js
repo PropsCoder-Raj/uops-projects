@@ -95,26 +95,26 @@ function TeacherStudentsModule() {
             <div className="content-wrapper">
               <div className="container-xxl flex-grow-1 container-p-y">
 
-                <h4 class="fw-bold py-3 mb-4 text-start"><span class="text-muted fw-light">Admin /</span> Students Module</h4>
+                <h4 className="fw-bold py-3 mb-4 text-start"><span className="text-muted fw-light">Admin /</span> Students Module</h4>
 
                 <div className="row">
                   <div className="col-lg-12">
-                    <div class="card text-start">
-                      <h5 class="card-header">
+                    <div className="card text-start">
+                      <h5 className="card-header">
                         Students List
                         
                         <button
                           type="button"
-                          class="btn btn-primary float-end"
+                          className="btn btn-primary float-end"
                           data-bs-toggle="modal"
                           data-bs-target="#basicModal"
                         >
                           Add Student
                         </button>
                       </h5>
-                      <div class="card-content p-2">
-                        <div class="table-responsive text-start">
-                          <table class="table text-nowrap" id="studentTableDT">
+                      <div className="card-content p-2">
+                        <div className="table-responsive text-start">
+                          <table className="table text-nowrap" id="studentTableDT">
                             <thead>
                               <tr>
                                 <th>No</th>
@@ -137,16 +137,16 @@ function TeacherStudentsModule() {
                                       <td>{ele.phoneNumber}</td>
                                       <td>{ele.course}</td>
                                       <td>
-                                        { ele.status === "ACTIVE" && <span class="badge bg-label-success"> ACTIVE </span> }
-                                        { ele.status === "DEACTIVE" && <span class="badge bg-label-danger"> DEACTIVE </span> }
+                                        { ele.status === "ACTIVE" && <span className="badge bg-label-success"> ACTIVE </span> }
+                                        { ele.status === "DEACTIVE" && <span className="badge bg-label-danger"> DEACTIVE </span> }
                                       </td>
                                       <td>
-                                        <div class="d-flex align-items-center">
+                                        <div className="d-flex align-items-center">
                                           <span style={{ cursor: "pointer" }}>
-                                            <i class="bx bx-pen mx-1"></i>
+                                            <i className="bx bx-pen mx-1"></i>
                                           </span>
                                           <span style={{ cursor: "pointer" }}>
-                                            <i class="bx bx-show mx-1"></i>
+                                            <i className="bx bx-show mx-1"></i>
                                           </span>
                                         </div>
                                       </td>
@@ -171,44 +171,44 @@ function TeacherStudentsModule() {
 
 
           
-          <div class="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel1">Create/Update Student</h5>
+          <div className="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title" id="exampleModalLabel1">Create/Update Student</h5>
                   <button
                     type="button"
-                    class="btn-close"
+                    className="btn-close"
                     data-bs-dismiss="modal"
                     aria-label="Close"
                   ></button>
                 </div>
-                <div class="modal-body text-start">
-                  <div class="row">
-                    <div class="col mb-3">
-                      <label for="studentName" class="form-label">Student Name</label>
-                      <input type="text" id="studentName" class="form-control" placeholder="Student Name" />
+                <div className="modal-body text-start">
+                  <div className="row">
+                    <div className="col mb-3">
+                      <label htmlFor="studentName" className="form-label">Student Name</label>
+                      <input type="text" id="studentName" className="form-control" placeholder="Student Name" />
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col mb-3">
-                      <label for="email" class="form-label">Email</label>
-                      <input type="number" id="email" class="form-control" placeholder="Email" />
+                  <div className="row">
+                    <div className="col mb-3">
+                      <label htmlFor="email" className="form-label">Email</label>
+                      <input type="number" id="email" className="form-control" placeholder="Email" />
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col mb-3">
-                      <label for="period" class="form-label">Phone Number</label>
-                      <div class="input-group">
-                        <span class="input-group-text">+44</span>
-                        <input type="number" class="form-control" placeholder="Phone Number" aria-label="Phone Number" />
+                  <div className="row">
+                    <div className="col mb-3">
+                      <label htmlFor="period" className="form-label">Phone Number</label>
+                      <div className="input-group">
+                        <span className="input-group-text">+44</span>
+                        <input type="number" className="form-control" placeholder="Phone Number" aria-label="Phone Number" />
                       </div>
                     </div>
                   </div>
                   <div className="row">
-                    <div class="col mb-3">
-                      <label for="course" class="form-label">Course</label>
-                      <select class="form-select" id="courseOption">
+                    <div className="col mb-3">
+                      <label htmlFor="course" className="form-label">Course</label>
+                      <select className="form-select" id="courseOption">
                         <option selected="" disabled>--SELECT--</option>
                         <option value="B.Com">B.Com</option>
                         <option value="B.Sc">B.Sc</option>
@@ -216,9 +216,9 @@ function TeacherStudentsModule() {
                     </div>
                   </div>
                   <div className="row">
-                    <div class="col mb-3">
-                      <label for="status" class="form-label">Status</label>
-                      <select class="form-select">
+                    <div className="col mb-3">
+                      <label htmlFor="status" className="form-label">Status</label>
+                      <select className="form-select">
                         <option selected="" disabled>--SELECT--</option>
                         <option value="1">ACTIVE</option>
                         <option value="0">DEACTIVE</option>
@@ -226,11 +226,11 @@ function TeacherStudentsModule() {
                     </div>
                   </div>
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-outline-secondary" data-bs-dismiss="modal">
                     Close
                   </button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
+                  <button type="button" className="btn btn-primary">Save changes</button>
                 </div>
               </div>
             </div>

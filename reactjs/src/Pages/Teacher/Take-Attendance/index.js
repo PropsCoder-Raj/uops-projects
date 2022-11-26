@@ -34,18 +34,18 @@ function TeacherTakeAttendaceModule() {
             <div className="content-wrapper">
               <div className="container-xxl flex-grow-1 container-p-y">
 
-                <h4 class="fw-bold py-3 mb-4 text-start"><span class="text-muted fw-light">Admin /</span> Take Attendance</h4>
+                <h4 className="fw-bold py-3 mb-4 text-start"><span className="text-muted fw-light">Admin /</span> Take Attendance</h4>
 
                 <div className="row">
                   <div className="col-lg-12">
-                    <div class="card text-start">
-                      <h5 class="card-header">
+                    <div className="card text-start">
+                      <h5 className="card-header">
                         Students List
                         <span className="float-end">{date}</span>
                       </h5>
-                      <div class="card-content p-2">
-                        <div class="table-responsive text-start">
-                          <table class="table text-nowrap" id="studentTableDT">
+                      <div className="card-content p-2">
+                        <div className="table-responsive text-start">
+                          <table className="table text-nowrap" id="studentTableDT">
                             <thead>
                               <tr>
                                 <th width="10%">No</th>
@@ -61,8 +61,8 @@ function TeacherTakeAttendaceModule() {
                                       <td>{index+1}</td>
                                       <td>{ele.name}</td>
                                       <td>
-                                      <button type="button" class="btn btn-success btn-sm me-2"> Present</button>
-                                      <button type="button" class="btn btn-danger btn-sm"> Absent</button>
+                                      <button type="button" className="btn btn-success btn-sm me-2"> Present</button>
+                                      <button type="button" className="btn btn-danger btn-sm"> Absent</button>
                                       </td>
                                     </tr>
                                   </>)
@@ -75,7 +75,7 @@ function TeacherTakeAttendaceModule() {
                       <div className="card-footer">
                         <button
                             type="button"
-                            class="btn btn-primary float-end"
+                            className="btn btn-primary float-end"
                             data-bs-toggle="modal"
                             data-bs-target="#basicModal"
                           >

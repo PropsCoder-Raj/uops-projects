@@ -35,17 +35,17 @@ function TeacherAttendanceComponent() {
 
                                 <div className="row">
                                     <div className="col">
-                                        <h4 class="fw-bold py-3 mb-4 text-start"><span class="text-muted fw-light">Teacher /</span> Daily Attendance</h4>
+                                        <h4 className="fw-bold py-3 mb-4 text-start"><span className="text-muted fw-light">Teacher /</span> Daily Attendance</h4>
                                     </div>
                                     <div className="col-lg-4">
                                         <div className="row">
                                             <div className="col-4">
-                                                <button type="button" class="btn btn-sm btn-primary float-end mt-1" onClick={takeAttendace}>Take Attendance</button>
+                                                <button type="button" className="btn btn-sm btn-primary float-end mt-1" onClick={takeAttendace}>Take Attendance</button>
                                             </div>
-                                            <div class="col">
-                                                <div class="input-group">
-                                                    <span class="input-group-text">Date</span>
-                                                    <input type="date" aria-label="Date" class="form-control" />
+                                            <div className="col">
+                                                <div className="input-group">
+                                                    <span className="input-group-text">Date</span>
+                                                    <input type="date" aria-label="Date" className="form-control" />
                                                 </div>
                                             </div>
                                         </div>
@@ -62,22 +62,22 @@ function TeacherAttendanceComponent() {
                                                             <div className="col-lg-2 col-md-12 mb-4">
                                                                 <div className="card">
                                                                     <div className="card-body">
-                                                                        <div class="user-avatar-section">
-                                                                            <div class=" d-flex align-items-center flex-column">
-                                                                                <img class="img-fluid rounded my-4" src="../../assets/img/avatars/student.png" height="110" width="110" alt="User avatar" />
-                                                                                <div class="user-info text-center">
-                                                                                    <h6 class="mb-2">{item.name.length > 15 ? item.name.slice(0, 15)+"..." : item.name }</h6>
+                                                                        <div className="user-avatar-section">
+                                                                            <div className=" d-flex align-items-center flex-column">
+                                                                                <img className="img-fluid rounded my-4" src="../../assets/img/avatars/student.png" height="110" width="110" alt="User avatar" />
+                                                                                <div className="user-info text-center">
+                                                                                    <h6 className="mb-2">{item.name.length > 15 ? item.name.slice(0, 15)+"..." : item.name }</h6>
                                                                                 </div>
                                                                                 <div>
                                                                                     {
                                                                                         item.presenty === "Present" ?
                                                                                             <>
-                                                                                                <button type="button" class="btn rounded-pill btn-icon btn-success">
+                                                                                                <button type="button" className="btn rounded-pill btn-icon btn-success">
                                                                                                     P
                                                                                                 </button>
                                                                                             </> :
                                                                                             <>
-                                                                                                <button type="button" class="btn rounded-pill btn-icon btn-light">
+                                                                                                <button type="button" className="btn rounded-pill btn-icon btn-light">
                                                                                                     P
                                                                                                 </button>
                                                                                             </>
@@ -85,12 +85,12 @@ function TeacherAttendanceComponent() {
                                                                                     {
                                                                                         item.presenty === "Absent" ?
                                                                                             <>
-                                                                                                <button type="button" class="btn rounded-pill btn-icon btn-danger">
+                                                                                                <button type="button" className="btn rounded-pill btn-icon btn-danger">
                                                                                                     A
                                                                                                 </button>
                                                                                             </> :
                                                                                             <>
-                                                                                                <button type="button" class="btn rounded-pill btn-icon btn-light">
+                                                                                                <button type="button" className="btn rounded-pill btn-icon btn-light">
                                                                                                     A
                                                                                                 </button>
                                                                                             </>
