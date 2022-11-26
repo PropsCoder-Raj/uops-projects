@@ -18,3 +18,19 @@ export const createCourse = async(name, semester, period) => {
 
     return res;
 }
+
+
+export const getCourses = async() => {
+    const res = await axios(`${base_url}/course/get`, {
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then((result) => {
+        return result;
+    }).catch((err) => {
+        return err.response;
+    });
+
+    return res;
+}

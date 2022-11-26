@@ -6,7 +6,7 @@ import AdminNav from "../../../Components/Layouts/AdminNav";
 import $ from "jquery";
 
 import toast from 'react-hot-toast';
-import { createCourse } from "../../../Services/api/course";
+import { createCourse, getCourses } from "../../../Services/api/course";
 
 function CourcesModule() {
 
@@ -16,11 +16,57 @@ function CourcesModule() {
   const [period, setPeriod] = useState(0);
   const [status, setStatus] = useState(1);
   const [loader, setLoader] = useState(false);
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     document.title = "UoPS | Admin - Course Module";
+    getCourse();
+  }, [])
 
+  const array = [
+    { name: "BE in Computer Engineering", semister: 8, period: 4, status: "ACTIVE" },
+    { name: "BE in Mechanical Engineering", semister: 8, period: 4, status: "ACTIVE" },
+    { name: "BE in Civil Engineering", semister: 8, period: 4, status: "ACTIVE" },
+    { name: "BE in Electrical Engineering", semister: 8, period: 4, status: "ACTIVE" },
+    { name: "B.B.A.", semister: 6, period: 3, status: "ACTIVE" },
+    { name: "B.Com", semister: 6, period: 3, status: "ACTIVE" },
+    { name: "B.C.A.", semister: 6, period: 3, status: "ACTIVE" },
+    { name: "B.S.C", semister: 6, period: 3, status: "ACTIVE" },
+    { name: "B.C.S.", semister: 6, period: 3, status: "ACTIVE" },
+    { name: "B.A.", semister: 6, period: 3, status: "ACTIVE" },
+  ]
 
+  const addCourse = async() => {
+    if (!name || !semester || !period) {
+      toast.error("All fields must be provided.")
+      return;
+    }
+
+    setLoader(true);
+    const res = await createCourse(name, semester, period);
+    if (res.status === 200) {
+      toast.success(res.data.message);
+      setLoader(false);
+      document.getElementById("closeCourseModal").click();
+    } else if (res.status === 500) {
+      toast.error(res.data.message);
+      setLoader(false);
+    }
+  }
+
+  const getCourse = async() => {
+    const res = await getCourses();
+    console.log("res, ", res)
+    if (res.status === 200) {
+      setData(res.data.data);
+      dataTableApply();
+    } else if (res.status === 500) {
+      setData([]);
+      dataTableApply();
+    }
+  }
+
+  const dataTableApply = () => {
     if (!$.fn.DataTable.isDataTable("#courseTableDT")) {
       // $(document).ready(function () {
       setTimeout(function () {
@@ -83,37 +129,6 @@ function CourcesModule() {
       }, 500);
       // });
     }
-  }, [])
-
-  const array = [
-    { name: "BE in Computer Engineering", semister: 8, period: 4, status: "ACTIVE" },
-    { name: "BE in Mechanical Engineering", semister: 8, period: 4, status: "ACTIVE" },
-    { name: "BE in Civil Engineering", semister: 8, period: 4, status: "ACTIVE" },
-    { name: "BE in Electrical Engineering", semister: 8, period: 4, status: "ACTIVE" },
-    { name: "B.B.A.", semister: 6, period: 3, status: "ACTIVE" },
-    { name: "B.Com", semister: 6, period: 3, status: "ACTIVE" },
-    { name: "B.C.A.", semister: 6, period: 3, status: "ACTIVE" },
-    { name: "B.S.C", semister: 6, period: 3, status: "ACTIVE" },
-    { name: "B.C.S.", semister: 6, period: 3, status: "ACTIVE" },
-    { name: "B.A.", semister: 6, period: 3, status: "ACTIVE" },
-  ]
-
-  const addCourse = async() => {
-    if (!name || !semester || !period) {
-      toast.error("All fields must be provided.")
-      return;
-    }
-
-    setLoader(true);
-    const res = await createCourse(name, semester, period);
-    if (res.status === 200) {
-      toast.success(res.data.message);
-      setLoader(false);
-      document.getElementById("closeCourseModal").click();
-    } else if (res.status === 500) {
-      toast.error(res.data.message);
-      setLoader(false);
-    }
   }
 
   const clearFields = async() => {
@@ -167,7 +182,7 @@ function CourcesModule() {
                             </thead>
                             <tbody className="table-border-bottom-0">
                               {
-                                array.map((ele, index) => {
+                                data.map((ele, index) => {
                                   return (<>
                                     <tr>
                                       <td>{index + 1}</td>
@@ -175,8 +190,8 @@ function CourcesModule() {
                                       <td>{ele.semister} SEM</td>
                                       <td>{ele.period} YEAR</td>
                                       <td>
-                                        {ele.status === "ACTIVE" && <span className="badge bg-label-success"> ACTIVE </span>}
-                                        {ele.status === "DEACTIVE" && <span className="badge bg-label-danger"> DEACTIVE </span>}
+                                        {ele.status === 1 && <span className="badge bg-label-success"> ACTIVE </span>}
+                                        {ele.status === 0 && <span className="badge bg-label-danger"> DEACTIVE </span>}
                                       </td>
                                       <td>
                                         <div className="d-flex align-items-center">
