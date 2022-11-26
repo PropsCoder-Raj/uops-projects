@@ -19,7 +19,6 @@ function CourcesModule() {
   const [name, setName] = useState("");
   const [semester, setSemester] = useState(0);
   const [period, setPeriod] = useState(0);
-  const [status, setStatus] = useState(1);
   const [objeectId, setObjeectId] = useState(0);
   const [loader, setLoader] = useState(false);
 
@@ -134,7 +133,6 @@ function CourcesModule() {
     setName(ele.name);
     setSemester(ele.semester);
     setPeriod(ele.period);
-    setStatus(ele.status);
     setObjeectId(ele._id)
     setAddEdit(1)
     document.getElementById("basicModalBtn").click();

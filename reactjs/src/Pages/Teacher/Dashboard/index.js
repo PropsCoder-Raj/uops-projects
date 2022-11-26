@@ -1,7 +1,6 @@
 import "./style.css";
 import { useEffect } from "react";
 import FooterComponent from "../../../Components/Layouts/Footer";
-import SidemenuComponent from "../../../Components/Layouts/Sidemenu";
 import AdminNav from "../../../Components/Layouts/AdminNav";
 
 function TeacherDashboardComponent() {

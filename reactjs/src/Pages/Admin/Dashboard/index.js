@@ -15,10 +15,6 @@ function DashboardComponent() {
     const dispatch = useDispatch();
     const dashboardCountSelector = useSelector((state) => state.dashboardCountReducer);
 
-    const [tecaherCount, setTecaherCount] = useState(0);
-    const [studentCount, setStudentCount] = useState(0);
-    const [courseCount, setCourseCount] = useState(0);
-
     useEffect(() => {
         document.title = "UoPS | Admin - Dashboard";
         getCounts();
@@ -29,15 +25,9 @@ function DashboardComponent() {
         const res = await getDashboardCount();
         console.log("res, ", res)
         if (res.status === 200) {
-            dispatch(setDashboardCount(res.data.teacherCount, res.data.studentCount, res.data.courseCount))
-            console.log("dashboardCountSelector: ", dashboardCountSelector);
-            setStudentCount(res.data.studentCount);
-            setCourseCount(res.data.courseCount);
-            setTecaherCount(res.data.teacherCount);
+            dispatch(setDashboardCount(res.data.teacherCount, res.data.studentCount, res.data.courseCount));
         } else if (res.status === 500) {
-            setStudentCount(0);
-            setCourseCount(0);
-            setTecaherCount(0);
+            dispatch(setDashboardCount(0, 0, 0));
         }
     }
 

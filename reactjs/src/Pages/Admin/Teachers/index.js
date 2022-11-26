@@ -5,74 +5,97 @@ import SidemenuComponent from "../../../Components/Layouts/Sidemenu";
 import AdminNav from "../../../Components/Layouts/AdminNav";
 import $ from "jquery";
 
+import { useSelector, useDispatch } from "react-redux";
+import { setTeachers } from "../../../Actions/index"
+import toast from 'react-hot-toast';
+import { getTeachers } from "../../../Services/api/teacher";
+
 function TeachersModule() {
+  
+  const dispatch = useDispatch();
+  const teachersSelector = useSelector((state) => state.teachersReducer);
 
   useEffect(() => {
     document.title = "UoPS | Admin - Teacher Module";
+    getTecahers()
+  }, [])
 
+  const getTecahers = async() => {
+    $("#teacherTableDT").DataTable().destroy();
+    const res = await getTeachers();
+    if (res.status === 200) {
+      dispatch(setTeachers(res.data.data))
+      dataTableApply();
+    } else if (res.status === 500) {
+      dispatch(setTeachers([]))
+      dataTableApply();
+    }
+  }
+
+  const dataTableApply = () => {
     if (!$.fn.DataTable.isDataTable("#teacherTableDT")) {
       // $(document).ready(function () {
-        setTimeout(function () {
-          $("#teacherTableDT").dataTable({
-            destroy: true,
-            pagingType: "full_numbers",
-            pageLength: 20,
-            processing: true,
-            dom: "Bfrtip",
-            select: {
-              style: "single",
+      setTimeout(function () {
+        $("#teacherTableDT").dataTable({
+          destroy: true,
+          pagingType: "full_numbers",
+          pageLength: 20,
+          processing: true,
+          dom: "Bfrtip",
+          select: {
+            style: "single",
+          },
+
+          buttons: [
+            {
+              extend: "pageLength",
+              className: "btn btn-sm btn-secondary bg-secondary",
             },
-
-            buttons: [
-              {
-                extend: "pageLength",
-                className: "btn btn-sm btn-secondary bg-secondary",
-              },
-              {
-                extend: "csv",
-                className: "btn btn-sm btn-success bg-success",
-              },
-              {
-                extend: "print",
-                customize: function (win) {
-                  $(win.document.body).css("font-size", "10pt");
-                  $(win.document.body)
-                    .find("table")
-                    .addClass("compact")
-                    .css("font-size", "inherit");
-                },
-                className: "btn btn-sm btn-danger bg-danger",
-              },
-            ],
-
-            fnRowCallback: function (
-              nRow,
-              aData,
-              iDisplayIndex,
-              iDisplayIndexFull
-            ) {
-              var index = iDisplayIndexFull + 1;
-              $("td:first", nRow).html(index);
-              return nRow;
+            {
+              extend: "csv",
+              className: "btn btn-sm btn-success bg-success",
             },
-
-            lengthMenu: [
-              [10, 20, 30, 50, -1],
-              [10, 20, 30, 50, "All"],
-            ],
-            columnDefs: [
-              {
-                targets: 0,
-                render: function (data, type, row, meta) {
-                  return type === "export" ? meta.row + 1 : data;
-                },
+            {
+              extend: "print",
+              customize: function (win) {
+                $(win.document.body).css("font-size", "10pt");
+                $(win.document.body)
+                  .find("table")
+                  .addClass("compact")
+                  .css("font-size", "inherit");
               },
-            ],
-          });
-        }, 500);
+              className: "btn btn-sm btn-danger bg-danger",
+            },
+          ],
+
+          fnRowCallback: function (
+            nRow,
+            aData,
+            iDisplayIndex,
+            iDisplayIndexFull
+          ) {
+            var index = iDisplayIndexFull + 1;
+            $("td:first", nRow).html(index);
+            return nRow;
+          },
+
+          lengthMenu: [
+            [10, 20, 30, 50, -1],
+            [10, 20, 30, 50, "All"],
+          ],
+          columnDefs: [
+            {
+              targets: 0,
+              render: function (data, type, row, meta) {
+                return type === "export" ? meta.row + 1 : data;
+              },
+            },
+          ],
+        });
+      }, 500);
       // });
     }
-  }, [])
+  }
 
   const array = [
     { name: "Stephen Schwarzman", email: "stephenschwarzman@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
@@ -128,16 +151,16 @@ function TeachersModule() {
                             </thead>
                             <tbody className="table-border-bottom-0">
                               {
-                                array.map((ele, index) => {
+                                teachersSelector.map((ele, index) => {
                                   return (<>
                                     <tr>
                                       <td>{index + 1}</td>
                                       <td>{ele.name}</td>
                                       <td>{ele.email}</td>
-                                      <td>{ele.course}</td>
+                                      <td>{ele.courses[0].name}</td>
                                       <td>
-                                        {ele.status === "ACTIVE" && <span className="badge bg-label-success"> ACTIVE </span>}
-                                        {ele.status === "DEACTIVE" && <span className="badge bg-label-danger"> DEACTIVE </span>}
+                                        {ele.status === 1 && <span className="badge bg-label-success"> ACTIVE </span>}
+                                        {ele.status === 0 && <span className="badge bg-label-danger"> DEACTIVE </span>}
                                       </td>
                                       <td>
                                         <div className="d-flex align-items-center">

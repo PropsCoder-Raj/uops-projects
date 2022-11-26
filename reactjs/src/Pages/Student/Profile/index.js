@@ -5,14 +5,15 @@ import AdminNav from "../../../Components/Layouts/AdminNav";
 
 function StudentProfileComponent() {
 
-    const [details, setDetails] = useState({
-        name: "Gerard Wertheimer",
-        email: "gerardwertheimer@gmail.com",
-        phoneNumber: "7038415053",
-    })
+    const [details, setDetails] = useState()
 
     useEffect(() => {
         document.title = "UoPS | Student - Profile";
+        setDetails({
+            name: "Gerard Wertheimer",
+            email: "gerardwertheimer@gmail.com",
+            phoneNumber: "7038415053",
+        })
     }, [])
 
     return (
