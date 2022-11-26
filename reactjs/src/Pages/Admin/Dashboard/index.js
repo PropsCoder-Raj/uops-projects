@@ -1,14 +1,45 @@
 import "./style.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import FooterComponent from "../../../Components/Layouts/Footer";
 import SidemenuComponent from "../../../Components/Layouts/Sidemenu";
 import AdminNav from "../../../Components/Layouts/AdminNav";
 
+import { getDashboardCount } from "../../../Services/api/dashboard";
+
+
+import { useSelector, useDispatch } from "react-redux";
+import { setDashboardCount } from "../../../Actions/index";
+
 function DashboardComponent() {
+
+    const dispatch = useDispatch();
+    const dashboardCountSelector = useSelector((state) => state.dashboardCountReducer);
+
+    const [tecaherCount, setTecaherCount] = useState(0);
+    const [studentCount, setStudentCount] = useState(0);
+    const [courseCount, setCourseCount] = useState(0);
 
     useEffect(() => {
         document.title = "UoPS | Admin - Dashboard";
+        getCounts();
     }, [])
+
+
+    const getCounts = async () => {
+        const res = await getDashboardCount();
+        console.log("res, ", res)
+        if (res.status === 200) {
+            dispatch(setDashboardCount(res.data.teacherCount, res.data.studentCount, res.data.courseCount))
+            console.log("dashboardCountSelector: ", dashboardCountSelector);
+            setStudentCount(res.data.studentCount);
+            setCourseCount(res.data.courseCount);
+            setTecaherCount(res.data.teacherCount);
+        } else if (res.status === 500) {
+            setStudentCount(0);
+            setCourseCount(0);
+            setTecaherCount(0);
+        }
+    }
 
     return (
         <>
@@ -62,7 +93,7 @@ function DashboardComponent() {
                                                 <div className="card">
                                                     <div className="card-body">
                                                         <span className="fw-semibold d-block mb-1">Total Teachers</span>
-                                                        <h3 className="card-title mb-2">30</h3>
+                                                        <h3 className="card-title mb-2">{dashboardCountSelector.data[0].teacherCount}</h3>
                                                     </div>
                                                 </div>
                                             </div>
@@ -70,7 +101,7 @@ function DashboardComponent() {
                                                 <div className="card">
                                                     <div className="card-body">
                                                         <span className="fw-semibold d-block mb-1">Total Students</span>
-                                                        <h3 className="card-title mb-2">30</h3>
+                                                        <h3 className="card-title mb-2">{dashboardCountSelector.data[0].studentCount}</h3>
                                                     </div>
                                                 </div>
                                             </div>
@@ -78,7 +109,7 @@ function DashboardComponent() {
                                                 <div className="card">
                                                     <div className="card-body">
                                                         <span className="fw-semibold d-block mb-1">Total Courses</span>
-                                                        <h3 className="card-title mb-2">30</h3>
+                                                        <h3 className="card-title mb-2">{dashboardCountSelector.data[0].courseCount}</h3>
                                                     </div>
                                                 </div>
                                             </div>

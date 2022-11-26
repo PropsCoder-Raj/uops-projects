@@ -1,12 +1,14 @@
 import "./style.css";
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import toast from 'react-hot-toast';
 import { loginAuth } from "../../../Services/api/auth"
 
 function LoginComponent() {
 
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -14,12 +16,35 @@ function LoginComponent() {
         document.title = "UoPS | Login";
     }, [])
 
+    const validateEmail = (email) => {
+        return email.match(
+          /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+    };
+
     const login = async() => {
+
+        if(!email || !password){
+            toast.error("Please fill in all the fields");
+            return;
+        }
+
+        if (!validateEmail(email)) {
+            toast.error("Email is not valid");
+            return;
+        }
+
         const res = await loginAuth(email, password);
         if (res.status === 200) {
-            toast.success("Login successful");
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("userId", res.data.user._id);
+            localStorage.setItem("role", res.data.user.role);
+            if(res.data.user.role === 0){
+                navigate('/admin-dashboard');
+                setTimeout(() => {
+                    toast.success("Login successful");
+                }, 500)
+            }
         }else if(res.status === 500){
             toast.error(res.data.message);
         }
