@@ -1,6 +1,7 @@
 import "./style.css";
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
+
 import toast from 'react-hot-toast';
 import { loginAuth } from "../../../Services/api/auth"
 
@@ -15,7 +16,6 @@ function LoginComponent() {
 
     const login = async() => {
         const res = await loginAuth(email, password);
-        console.log("res :", res)
         if (res.status === 200) {
             toast.success("Login successful");
             localStorage.setItem("token", res.data.token);

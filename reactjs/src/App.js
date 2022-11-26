@@ -21,7 +21,7 @@ function App() {
   
   return (
     <>
-      <Toaster />
+      <Toaster position="bottom-center" />
       <div className="App">
         <Routes>
           <Route path='/' element={ <Navigate to="/login" /> }/>

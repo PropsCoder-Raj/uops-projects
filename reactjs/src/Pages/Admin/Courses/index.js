@@ -1,76 +1,86 @@
 import "./style.css";
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import FooterComponent from "../../../Components/Layouts/Footer";
 import SidemenuComponent from "../../../Components/Layouts/Sidemenu";
 import AdminNav from "../../../Components/Layouts/AdminNav";
 import $ from "jquery";
 
+import toast from 'react-hot-toast';
+import { createCourse } from "../../../Services/api/course";
+
 function CourcesModule() {
+
+  const [addEdit, setAddEdit] = useState(0);
+  const [name, setName] = useState("");
+  const [semester, setSemester] = useState(0);
+  const [period, setPeriod] = useState(0);
+  const [status, setStatus] = useState(1);
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     document.title = "UoPS | Admin - Course Module";
 
-    
+
     if (!$.fn.DataTable.isDataTable("#courseTableDT")) {
       // $(document).ready(function () {
-        setTimeout(function () {
-          $("#courseTableDT").dataTable({
-            destroy: true,
-            pagingType: "full_numbers",
-            pageLength: 20,
-            processing: true,
-            dom: "Bfrtip",
-            select: {
-              style: "single",
+      setTimeout(function () {
+        $("#courseTableDT").dataTable({
+          destroy: true,
+          pagingType: "full_numbers",
+          pageLength: 20,
+          processing: true,
+          dom: "Bfrtip",
+          select: {
+            style: "single",
+          },
+
+          buttons: [
+            {
+              extend: "pageLength",
+              className: "btn btn-sm btn-secondary bg-secondary",
             },
-
-            buttons: [
-              {
-                extend: "pageLength",
-                className: "btn btn-sm btn-secondary bg-secondary",
-              },
-              {
-                extend: "csv",
-                className: "btn btn-sm btn-success bg-success",
-              },
-              {
-                extend: "print",
-                customize: function (win) {
-                  $(win.document.body).css("font-size", "10pt");
-                  $(win.document.body)
-                    .find("table")
-                    .addClass("compact")
-                    .css("font-size", "inherit");
-                },
-                className: "btn btn-sm btn-danger bg-danger",
-              },
-            ],
-
-            fnRowCallback: function (
-              nRow,
-              aData,
-              iDisplayIndex,
-              iDisplayIndexFull
-            ) {
-              var index = iDisplayIndexFull + 1;
-              $("td:first", nRow).html(index);
-              return nRow;
+            {
+              extend: "csv",
+              className: "btn btn-sm btn-success bg-success",
             },
-
-            lengthMenu: [
-              [10, 20, 30, 50, -1],
-              [10, 20, 30, 50, "All"],
-            ],
-            columnDefs: [
-              {
-                targets: 0,
-                render: function (data, type, row, meta) {
-                  return type === "export" ? meta.row + 1 : data;
-                },
+            {
+              extend: "print",
+              customize: function (win) {
+                $(win.document.body).css("font-size", "10pt");
+                $(win.document.body)
+                  .find("table")
+                  .addClass("compact")
+                  .css("font-size", "inherit");
               },
-            ],
-          });
-        }, 500);
+              className: "btn btn-sm btn-danger bg-danger",
+            },
+          ],
+
+          fnRowCallback: function (
+            nRow,
+            aData,
+            iDisplayIndex,
+            iDisplayIndexFull
+          ) {
+            var index = iDisplayIndexFull + 1;
+            $("td:first", nRow).html(index);
+            return nRow;
+          },
+
+          lengthMenu: [
+            [10, 20, 30, 50, -1],
+            [10, 20, 30, 50, "All"],
+          ],
+          columnDefs: [
+            {
+              targets: 0,
+              render: function (data, type, row, meta) {
+                return type === "export" ? meta.row + 1 : data;
+              },
+            },
+          ],
+        });
+      }, 500);
       // });
     }
   }, [])
@@ -88,6 +98,30 @@ function CourcesModule() {
     { name: "B.A.", semister: 6, period: 3, status: "ACTIVE" },
   ]
 
+  const addCourse = async() => {
+    if (!name || !semester || !period) {
+      toast.error("All fields must be provided.")
+      return;
+    }
+
+    setLoader(true);
+    const res = await createCourse(name, semester, period);
+    if (res.status === 200) {
+      toast.success(res.data.message);
+      setLoader(false);
+      document.getElementById("closeCourseModal").click();
+    } else if (res.status === 500) {
+      toast.error(res.data.message);
+      setLoader(false);
+    }
+  }
+
+  const clearFields = async() => {
+    setName("");
+    setSemester(0);
+    setPeriod(0);
+  }
+
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -96,7 +130,7 @@ function CourcesModule() {
           <SidemenuComponent />
 
           <div className="layout-page">
-            
+
             <AdminNav profileImgPath="../assets/img/avatars/admin.png" role="admin" />
             <div className="content-wrapper">
               <div className="container-xxl flex-grow-1 container-p-y">
@@ -184,43 +218,54 @@ function CourcesModule() {
                     className="btn-close"
                     data-bs-dismiss="modal"
                     aria-label="Close"
+                    onClick={clearFields}
                   ></button>
                 </div>
                 <div className="modal-body text-start">
                   <div className="row">
                     <div className="col mb-3">
                       <label htmlFor="courceName" className="form-label">Cource Name</label>
-                      <input type="text" id="courceName" className="form-control" placeholder="Cource Name" />
+                      <input type="text" id="courceName" className="form-control" placeholder="Cource Name" value={name} onChange={(e) => setName(e.target.value)} />
                     </div>
                   </div>
                   <div className="row">
                     <div className="col mb-3">
                       <label htmlFor="semister" className="form-label">Semister</label>
-                      <input type="number" id="semister" className="form-control" placeholder="Semister count how many sem available for this cources" />
+                      <input type="number" id="semister" className="form-control" placeholder="Semister count how many sem available for this cources" value={semester} onChange={(e) => setSemester(e.target.value)} />
                     </div>
                   </div>
                   <div className="row">
                     <div className="col mb-3">
                       <label htmlFor="period" className="form-label">Period</label>
-                      <input type="number" id="period" className="form-control" placeholder="Period in years" />
+                      <input type="number" id="period" className="form-control" placeholder="Period in years" value={period} onChange={(e) => setPeriod(e.target.value)} />
                     </div>
                   </div>
-                  <div className="row">
-                    <div className="col mb-3">
-                      <label htmlFor="status" className="form-label">Status</label>
-                      <select className="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
-                        <option selected="" disabled>--SELECT--</option>
-                        <option value="1">ACTIVE</option>
-                        <option value="0">DEACTIVE</option>
-                      </select>
+                  {addEdit === 1 &&
+                    <div className="row">
+                      <div className="col mb-3">
+                        <label htmlFor="status" className="form-label">Status</label>
+                        <select className="form-select" id="exampleFormControlSelect1" aria-label="Default select example" value={status} onChange={(e) => setStatus(e.target.value)}>
+                          <option selected="" disabled>--SELECT--</option>
+                          <option value="1">ACTIVE</option>
+                          <option value="0">DEACTIVE</option>
+                        </select>
+                      </div>
                     </div>
-                  </div>
+                  }
                 </div>
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-outline-secondary" data-bs-dismiss="modal">
+                  <button type="button" id="closeCourseModal" className="btn btn-outline-secondary" data-bs-dismiss="modal" onClick={clearFields}>
                     Close
                   </button>
-                  <button type="button" className="btn btn-primary">Save changes</button>
+                  <button type="button" className="btn btn-primary" onClick={() => addCourse()}>
+                    {
+                      loader === true ? 
+                      <div class="spinner-border spinner-border-sm text-dark" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                      </div> :
+                      "Save changes"
+                    }
+                  </button>
                 </div>
               </div>
             </div>

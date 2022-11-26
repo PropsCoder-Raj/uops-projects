@@ -1,10 +1,10 @@
 import { base_url } from "./baseurl";
 import axios from "axios";
 
-export const loginAuth = async(email, password) => {
-    const payload = { email: email, password: password };
+export const createCourse = async(name, semester, period) => {
+    const payload = { name: name, semester: semester, period: period };
 
-    const res = await axios(`${base_url}/user/signin`, {
+    const res = await axios(`${base_url}/course/create`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
