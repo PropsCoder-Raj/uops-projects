@@ -19,6 +19,39 @@ export const createCourse = async(name, semester, period) => {
     return res;
 }
 
+export const updateCourse = async(name, semester, period, _id) => {
+    const payload = { name: name, semester: semester, period: period };
+
+    const res = await axios(`${base_url}/course/update/${_id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data: payload,
+    }).then((result) => {
+        return result;
+    }).catch((err) => {
+        return err.response;
+    });
+
+    return res;
+}
+
+export const deleteCourse = async( _id) => {
+    const res = await axios(`${base_url}/course/delete/${_id}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    }).then((result) => {
+        return result;
+    }).catch((err) => {
+        return err.response;
+    });
+
+    return res;
+}
+
 
 export const getCourses = async() => {
     const res = await axios(`${base_url}/course/get`, {

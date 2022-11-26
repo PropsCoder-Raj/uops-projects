@@ -33,6 +33,31 @@ exports.getCourse = BigPromise(async (req, res, next) => {
   return res.status(200).send({ success: true, message: "Get all course successfully.", data: course, count: course.length });
 });
 
+// Update course
+exports.updateCourse = BigPromise(async (req, res, next) => {
+  const { name, semester, period, status } = req.body;
+  const { _id } = req.params;
+
+  if (!_id) {
+    return next(new Error("Please enter course _id"));
+  }
+
+  const course = await Course.findOneAndUpdate({_id: _id}, { $set: req.body }, { new: true });
+  return res.status(200).send({ success: true, message: "Update course successfully.", data: course });
+});
+
+// Delete course
+exports.deleteCourse = BigPromise(async (req, res, next) => {
+  const { _id } = req.params;
+
+  if (!_id) {
+    return next(new Error("Please enter course _id"));
+  }
+
+  const course = await Course.findOneAndDelete({_id: _id});
+  return res.status(200).send({ success: true, message: "Delete course successfully." });
+});
+
 // Get students by course 
 exports.getStudentsCourse = BigPromise(async (req, res, next) => {
   const { _id } = req.params;

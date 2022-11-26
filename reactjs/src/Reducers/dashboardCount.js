@@ -1,4 +1,11 @@
-const initialState = [];
+const initialState = {
+    data:
+        [{
+            teacherCount: 0,
+            studentCount: 0,
+            courseCount: 0
+        }]
+};
 
 const dashboardCountReducer = (state = initialState, action) => {
     switch (action.type) {

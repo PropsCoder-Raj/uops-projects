@@ -8,37 +8,25 @@ import $ from "jquery";
 import { useSelector, useDispatch } from "react-redux";
 import { setCourses } from "../../../Actions/index"
 import toast from 'react-hot-toast';
-import { createCourse, getCourses } from "../../../Services/api/course";
+import { createCourse, deleteCourse, getCourses, updateCourse,  } from "../../../Services/api/course";
 
 function CourcesModule() {
 
   const dispatch = useDispatch();
   const courseSelector = useSelector((state) => state.courseReducer);
 
-  const [addEdit, setAddEdit] = useState(0);
+  const [addEdit, setAddEdit] = useState(0); // 0: Craete, 1: Update, 2: View
   const [name, setName] = useState("");
   const [semester, setSemester] = useState(0);
   const [period, setPeriod] = useState(0);
   const [status, setStatus] = useState(1);
+  const [objeectId, setObjeectId] = useState(0);
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     document.title = "UoPS | Admin - Course Module";
     getCourse();
   }, [])
-
-  const array = [
-    { name: "BE in Computer Engineering", semister: 8, period: 4, status: "ACTIVE" },
-    { name: "BE in Mechanical Engineering", semister: 8, period: 4, status: "ACTIVE" },
-    { name: "BE in Civil Engineering", semister: 8, period: 4, status: "ACTIVE" },
-    { name: "BE in Electrical Engineering", semister: 8, period: 4, status: "ACTIVE" },
-    { name: "B.B.A.", semister: 6, period: 3, status: "ACTIVE" },
-    { name: "B.Com", semister: 6, period: 3, status: "ACTIVE" },
-    { name: "B.C.A.", semister: 6, period: 3, status: "ACTIVE" },
-    { name: "B.S.C", semister: 6, period: 3, status: "ACTIVE" },
-    { name: "B.C.S.", semister: 6, period: 3, status: "ACTIVE" },
-    { name: "B.A.", semister: 6, period: 3, status: "ACTIVE" },
-  ]
 
   const addCourse = async() => {
     if (!name || !semester || !period) {
@@ -52,6 +40,7 @@ function CourcesModule() {
       toast.success(res.data.message);
       setLoader(false);
       document.getElementById("closeCourseModal").click();
+      getCourse()
     } else if (res.status === 500) {
       toast.error(res.data.message);
       setLoader(false);
@@ -59,8 +48,8 @@ function CourcesModule() {
   }
 
   const getCourse = async() => {
+    $("#courseTableDT").DataTable().destroy();
     const res = await getCourses();
-    console.log("res, ", res)
     if (res.status === 200) {
       dispatch(setCourses(res.data.data))
       dataTableApply();
@@ -141,6 +130,49 @@ function CourcesModule() {
     setPeriod(0);
   }
 
+  const getSingleCourse = async(ele) => {
+    setName(ele.name);
+    setSemester(ele.semester);
+    setPeriod(ele.period);
+    setStatus(ele.status);
+    setObjeectId(ele._id)
+    setAddEdit(1)
+    document.getElementById("basicModalBtn").click();
+  }
+
+  const updateCourseById = async() => {
+    if (!name || !semester || !period) {
+      toast.error("All fields must be provided.")
+      return;
+    }
+
+    setLoader(true);
+    const res = await updateCourse(name, semester, period, objeectId);
+    if (res.status === 200) {
+      toast.success(res.data.message);
+      setLoader(false);
+      document.getElementById("closeCourseModal").click();
+      getCourse();
+    } else if (res.status === 500) {
+      toast.error(res.data.message);
+      setLoader(false);
+    }
+  }
+
+  
+  const deleteCourseById = async(_id) => {
+    const res = await deleteCourse(_id);
+    if (res.status === 200) {
+      toast.success(res.data.message);
+      setLoader(false);
+      document.getElementById("closeCourseModal").click();
+      getCourse();
+    } else if (res.status === 500) {
+      toast.error(res.data.message);
+      setLoader(false);
+    }
+  }
+
   return (
     <>
       <div className="layout-wrapper layout-content-navbar">
@@ -167,6 +199,8 @@ function CourcesModule() {
                           className="btn btn-primary float-end"
                           data-bs-toggle="modal"
                           data-bs-target="#basicModal"
+                          id="basicModalBtn"
+                          onClick={() => { setAddEdit(0) }}
                         >
                           Add Course
                         </button>
@@ -191,7 +225,7 @@ function CourcesModule() {
                                     <tr>
                                       <td>{index + 1}</td>
                                       <td>{ele.name}</td>
-                                      <td>{ele.semister} SEM</td>
+                                      <td>{ele.semester} SEM</td>
                                       <td>{ele.period} YEAR</td>
                                       <td>
                                         {ele.status === 1 && <span className="badge bg-label-success"> ACTIVE </span>}
@@ -199,11 +233,14 @@ function CourcesModule() {
                                       </td>
                                       <td>
                                         <div className="d-flex align-items-center">
-                                          <span style={{ cursor: "pointer" }}>
+                                          <span style={{ cursor: "pointer" }} onClick={() => {getSingleCourse(ele); setAddEdit(1);}}>
                                             <i className="bx bx-pen mx-1"></i>
                                           </span>
-                                          <span style={{ cursor: "pointer" }}>
+                                          <span style={{ cursor: "pointer" }} onClick={() => {getSingleCourse(ele); setAddEdit(2);}}>
                                             <i className="bx bx-show mx-1"></i>
+                                          </span>
+                                          <span style={{ cursor: "pointer" }} onClick={() => deleteCourseById(ele._id)}>
+                                            <i className="bx bx-trash mx-1"></i>
                                           </span>
                                         </div>
                                       </td>
@@ -244,39 +281,27 @@ function CourcesModule() {
                   <div className="row">
                     <div className="col mb-3">
                       <label htmlFor="courceName" className="form-label">Cource Name</label>
-                      <input type="text" id="courceName" className="form-control" placeholder="Cource Name" value={name} onChange={(e) => setName(e.target.value)} />
+                      <input type="text" id="courceName" className="form-control" placeholder="Cource Name" value={name} onChange={(e) => setName(e.target.value)} disabled={ addEdit === 2 && true } />
                     </div>
                   </div>
                   <div className="row">
                     <div className="col mb-3">
                       <label htmlFor="semister" className="form-label">Semister</label>
-                      <input type="number" id="semister" className="form-control" placeholder="Semister count how many sem available for this cources" value={semester} onChange={(e) => setSemester(e.target.value)} />
+                      <input type="number" id="semister" className="form-control" placeholder="Semister count how many sem available for this cources" value={semester} onChange={(e) => setSemester(e.target.value)} disabled={ addEdit === 2 && true } />
                     </div>
                   </div>
                   <div className="row">
                     <div className="col mb-3">
                       <label htmlFor="period" className="form-label">Period</label>
-                      <input type="number" id="period" className="form-control" placeholder="Period in years" value={period} onChange={(e) => setPeriod(e.target.value)} />
+                      <input type="number" id="period" className="form-control" placeholder="Period in years" value={period} onChange={(e) => setPeriod(e.target.value)} disabled={ addEdit === 2 && true } />
                     </div>
                   </div>
-                  {addEdit === 1 &&
-                    <div className="row">
-                      <div className="col mb-3">
-                        <label htmlFor="status" className="form-label">Status</label>
-                        <select className="form-select" id="exampleFormControlSelect1" aria-label="Default select example" value={status} onChange={(e) => setStatus(e.target.value)}>
-                          <option selected="" disabled>--SELECT--</option>
-                          <option value="1">ACTIVE</option>
-                          <option value="0">DEACTIVE</option>
-                        </select>
-                      </div>
-                    </div>
-                  }
                 </div>
                 <div className="modal-footer">
                   <button type="button" id="closeCourseModal" className="btn btn-outline-secondary" data-bs-dismiss="modal" onClick={clearFields}>
                     Close
                   </button>
-                  <button type="button" className="btn btn-primary" onClick={() => addCourse()}>
+                  <button type="button" className="btn btn-primary" onClick={ addEdit == 0 ? () => addCourse() :  () => updateCourseById()} hidden={ addEdit === 2 && true }>
                     {
                       loader === true ? 
                       <div class="spinner-border spinner-border-sm text-dark" role="status">
