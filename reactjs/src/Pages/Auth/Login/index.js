@@ -67,6 +67,20 @@ function LoginComponent() {
                 }else{
                     console.log("Not Login")
                 }
+            }else if (res.data.user.role === 2) {
+                if(signIn({
+                    token: res.data.token,
+                    expiresIn: 120,
+                    tokenType: "Bearer",
+                    authState: res.data.user,
+                })){
+                    navigate('/student-dashboard');
+                    setTimeout(() => {
+                        toast.success("Login successful");
+                    }, 500)
+                }else{
+                    console.log("Not Login")
+                }
             }
         } else if (res.status === 500) {
             toast.error(res.data.message);

@@ -44,9 +44,9 @@ function App() {
                 <Route path="/teacher-attendance" element={<RequireAuth loginPath={'/login'}><TeacherAttendanceComponent /></RequireAuth>} />
                 <Route path="/teacher-take-attendance" element={<RequireAuth loginPath={'/login'}><TeacherTakeAttendaceModule /></RequireAuth>} />
 
-                <Route path="/student-dashboard" element={<StudentDashboardComponent />} />
-                <Route path="/student-profile" element={<StudentProfileComponent />} />
-                <Route path="/student-attendance" element={<StudentAttendanceComponent />} />
+                <Route path="/student-dashboard" element={<RequireAuth loginPath={'/login'}><StudentDashboardComponent /></RequireAuth>} />
+                <Route path="/student-profile" element={<RequireAuth loginPath={'/login'}><StudentProfileComponent /></RequireAuth>} />
+                <Route path="/student-attendance" element={<RequireAuth loginPath={'/login'}><StudentAttendanceComponent /></RequireAuth>} />
 
                 <Route path="/login" element={<LoginComponent />} />
                 <Route path="/register" element={<RegisterComponent />} />
