@@ -25,7 +25,6 @@ function TeacherStudentsModule() {
   var [email, setEmail] = useState("");
   var [password, setPassword] = useState("");
   var [phoneNumber, setPhoneNumber] = useState("");
-  var [courseId, setCourseId] = useState("");
   var [objectId, setObjectId] = useState("");
   const [loader, setLoader] = useState(false);
 

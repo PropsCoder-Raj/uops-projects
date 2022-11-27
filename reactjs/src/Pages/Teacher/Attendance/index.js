@@ -1,26 +1,53 @@
 import "./style.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import FooterComponent from "../../../Components/Layouts/Footer";
 import AdminNav from "../../../Components/Layouts/AdminNav";
+import { getCheckAttendanceWithCourseIdAndTeacherIdAndDate } from "../../../Services/api/attendance";
+import { useAuthUser } from 'react-auth-kit';
 
 function TeacherAttendanceComponent() {
 
-    const array = [
-        { name: "Gina Rinehart", email: "gina@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 5487986532', status: "ACTIVE", presenty: "Present" },
-        { name: "Andrey Melnichenko", email: "andreymelnichenko@gmail.com", course: "B.Com", phoneNumber: '+44 9865542145', status: "ACTIVE", presenty: "Present" },
-        { name: "Jim Simons", email: "jimsimons@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 4578651278', status: "DEACTIVE", presenty: "Absent" },
-        { name: "Stephen Schwarzman", email: "stephenschwarzman@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 5487986532', status: "ACTIVE", presenty: "Present" },
-        { name: "Lee Shau Kee", email: "leeshaukee@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 7845568989', status: "ACTIVE", presenty: "Present" },
-        { name: "Jeff Yass", email: "jeffyass@gmail.com", course: "B.B.A", phoneNumber: '+44 7878989865', status: "ACTIVE", presenty: "Present" },
-        { name: "Robin Zeng", email: "robinzeng@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 1256234556', status: "ACTIVE", presenty: "Present" },
-    ]
+    const auth = useAuthUser();
+    const [date, setDate] = useState("");
+    const [count, setCount] = useState(0);
+    const [attendance, setAttendance] = useState([]);
+    const [takeAttendaceStatus, setTakeAttendanceStatus] = useState(false);
 
     useEffect(() => {
         document.title = "UoPS | Teacher - Daily Attendance";
-    }, [])
+        let today = new Date();
+        setDate(`${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`)
+        setTimeout(() => {
+            changeaDateGetAttendance();
+        }, 500);
+    }, []);
 
     const takeAttendace = () => {
         window.location = "/teacher-take-attendance";
+    }
+
+    const changeaDateGetAttendance = async() => {
+        var _date = document.getElementById("attendDate").value;
+        let today = new Date();
+        var todayString = `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`
+        const res = await getCheckAttendanceWithCourseIdAndTeacherIdAndDate(auth().courseId[0], auth()._id, _date);
+        if (res.status === 200) {
+            if(res.data.count > 0){
+                setAttendance(res.data.attendance)
+                if(todayString.toString() === _date.toString()){
+                    setTakeAttendanceStatus(false)
+                    console.log("takeAttendaceStatus: ", takeAttendaceStatus);
+                }
+            }else{
+                if(todayString.toString() === _date.toString()){
+                    setTakeAttendanceStatus(true)
+                    console.log("takeAttendaceStatus: ", takeAttendaceStatus);
+                }
+                setAttendance([])
+            }
+            setCount(res.data.count)
+        } else if (res.status === 500) {
+        }
     }
 
     return (
@@ -40,12 +67,14 @@ function TeacherAttendanceComponent() {
                                     <div className="col-lg-4">
                                         <div className="row">
                                             <div className="col-4">
-                                                <button type="button" className="btn btn-sm btn-primary float-end mt-1" onClick={takeAttendace}>Take Attendance</button>
+                                                {
+                                                    takeAttendaceStatus && <button type="button" className="btn btn-sm btn-primary float-end mt-1" onClick={takeAttendace}>Take Attendance</button>
+                                                }
                                             </div>
                                             <div className="col">
                                                 <div className="input-group">
                                                     <span className="input-group-text">Date</span>
-                                                    <input type="date" aria-label="Date" className="form-control" />
+                                                    <input type="date" aria-label="Date" className="form-control" id="attendDate" value={date} onChange={(e) => {setDate(e.target.value); changeaDateGetAttendance()}}/>
                                                 </div>
                                             </div>
                                         </div>
@@ -53,9 +82,22 @@ function TeacherAttendanceComponent() {
                                 </div>
                                 <div>
                                     <div className="col-lg-12 col-md-6 order-1">
+                                        {
+                                            count === 0 && 
+                                            <div className="row">
+                                                <div className="col-lg-12">
+                                                    <div>
+                                                        <img src="../assets/img/favicon.png" height={200} />
+                                                    </div>
+                                                    <div>
+                                                        <h4 className="py-3 mb-4 text-center">No see attendance for {date}</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        }
                                         <div className="row">
                                             {
-                                                array.map((item, index) => {
+                                                attendance.map((item, index) => {
                                                     return (
                                                         <>
 
@@ -66,11 +108,11 @@ function TeacherAttendanceComponent() {
                                                                             <div className=" d-flex align-items-center flex-column">
                                                                                 <img className="img-fluid rounded my-4" src="../../assets/img/avatars/student.png" height="110" width="110" alt="User avatar" />
                                                                                 <div className="user-info text-center">
-                                                                                    <h6 className="mb-2">{item.name.length > 15 ? item.name.slice(0, 15)+"..." : item.name }</h6>
+                                                                                    {/* <h6 className="mb-2">{item.name.length > 15 ? item.name.slice(0, 15)+"..." : item.name }</h6> */}
                                                                                 </div>
                                                                                 <div>
                                                                                     {
-                                                                                        item.presenty === "Present" ?
+                                                                                        item.status === 1 ?
                                                                                             <>
                                                                                                 <button type="button" className="btn rounded-pill btn-icon btn-success">
                                                                                                     P
@@ -83,7 +125,7 @@ function TeacherAttendanceComponent() {
                                                                                             </>
                                                                                     }
                                                                                     {
-                                                                                        item.presenty === "Absent" ?
+                                                                                        item.status === 0 ?
                                                                                             <>
                                                                                                 <button type="button" className="btn rounded-pill btn-icon btn-danger">
                                                                                                     A

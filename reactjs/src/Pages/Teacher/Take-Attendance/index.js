@@ -1,28 +1,88 @@
 import "./style.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import FooterComponent from "../../../Components/Layouts/Footer";
-import SidemenuComponent from "../../../Components/Layouts/Sidemenu";
 import AdminNav from "../../../Components/Layouts/AdminNav";
-import $ from "jquery";
 
+import { getStudentCourseWise } from "../../../Services/api/course";
+import { createAttendance } from "../../../Services/api/attendance";
+import toast from 'react-hot-toast';
+import { useAuthUser } from 'react-auth-kit';
 
 function TeacherTakeAttendaceModule() {
+  
+  const auth = useAuthUser();
+  const navigate = useNavigate();
+  const [students, setStudents] = useState([]);
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     document.title = "UoPS | Teacher - Take Attendance";
+    getStudentData();
   }, [])
 
-  const array = [
-    { name: "Gina Rinehart", email: "gina@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 5487986532', status: "ACTIVE" },
-    { name: "Andrey Melnichenko", email: "andreymelnichenko@gmail.com", course: "B.Com", phoneNumber: '+44 9865542145', status: "ACTIVE" },
-    { name: "Jim Simons", email: "jimsimons@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 4578651278', status: "DEACTIVE" },
-    { name: "Stephen Schwarzman", email: "stephenschwarzman@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 5487986532', status: "ACTIVE" },
-    { name: "Lee Shau Kee", email: "leeshaukee@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 7845568989', status: "ACTIVE" },
-    { name: "Jeff Yass", email: "jeffyass@gmail.com", course: "B.B.A", phoneNumber: '+44 7878989865', status: "ACTIVE" },
-    { name: "Robin Zeng", email: "robinzeng@gmail.com", course: "BE in Computer Engineering", phoneNumber: '+44 1256234556', status: "ACTIVE" },
-  ];
-
   const date = (new Date()).toDateString();
+
+  
+  const getStudentData = async() => {
+    const res = await getStudentCourseWise(auth().courseId[0]);
+    if (res.status === 200) {
+      let array = [];
+      res.data.data.map((ele) => {
+        array.push({ ...ele, attendaceStatus: -1 })
+      })
+      setStudents(array);
+    } else if (res.status === 500) {
+      let array = [];
+      setStudents(array);
+    }
+  }
+
+  const setAttendStatus = (ind, value) => {
+    students.forEach((ele, index) => {
+      if(index === ind) {
+        ele.attendaceStatus = value;
+      }
+    })
+    setStudents([...students]);
+  }
+
+  const submitAttendStatus = () => {
+    var notCheckCount = 0;
+    var bar = new Promise((resolve, reject) => {
+      students.forEach((ele, index, array) => {
+        if(ele.attendaceStatus == -1){
+          notCheckCount++
+        }
+
+        if(index === array.length - 1) resolve()
+      })
+    })
+
+    bar.then(() => {
+      if(notCheckCount > 0){
+        toast.error("Please check all students before submitting the attendance. ")
+        return;
+      }
+
+      setLoader(true);
+
+      var bar1 = new Promise((resolve, reject) => {
+        students.forEach(async(ele, index, array) => {
+          const res = await createAttendance(auth().courseId[0], auth()._id, ele._id, ele.attendaceStatus);
+          if (res.status === 200) {
+            if(index === array.length - 1) resolve()
+          }
+        });
+      });
+
+      bar1.then(() => {
+        setLoader(false);
+        navigate('/teacher-attendance')
+        toast.success("Complete the attendance students.");
+      });
+    });  
+  }
 
   return (
     <>
@@ -55,14 +115,25 @@ function TeacherTakeAttendaceModule() {
                             </thead>
                             <tbody className="table-border-bottom-0">
                               {
-                                array.map((ele, index) => {
+                                students.map((ele, index) => {
                                   return (<>
                                     <tr>
                                       <td>{index+1}</td>
                                       <td>{ele.name}</td>
                                       <td>
-                                      <button type="button" className="btn btn-success btn-sm me-2"> Present</button>
-                                      <button type="button" className="btn btn-danger btn-sm"> Absent</button>
+                                        {
+                                          console.log("ele.attendaceStatus: ", ele.attendaceStatus)
+                                          }
+                                        {
+                                          ele.attendaceStatus !== -1 ? <>
+                                            {ele.attendaceStatus == 1 && <> <span className="badge bg-label-success"> PRESENT </span> </>}
+                                            {ele.attendaceStatus == 0 && <> <span className="badge bg-label-danger"> ABSENT </span> </>}
+                                          </> :
+                                            <>
+                                              <button type="button" className="btn btn-success btn-sm me-2" onClick={() => setAttendStatus(index, 1) }> Present</button>
+                                              <button type="button" className="btn btn-danger btn-sm" onClick={() => setAttendStatus(index, 0) }> Absent</button>
+                                            </>
+                                        }
                                       </td>
                                     </tr>
                                   </>)
@@ -76,10 +147,15 @@ function TeacherTakeAttendaceModule() {
                         <button
                             type="button"
                             className="btn btn-primary float-end"
-                            data-bs-toggle="modal"
-                            data-bs-target="#basicModal"
+                            onClick={() => submitAttendStatus()}
                           >
-                            Submit Attendance
+                            {
+                              loader === true ? 
+                              <div className="spinner-border spinner-border-sm text-dark" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                              </div> :
+                              "Submit Attendance"
+                            }
                           </button>
                       </div>
                     </div>
