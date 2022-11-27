@@ -1,4 +1,5 @@
 import './App.css';
+import React, { useContext } from "react";
 import { Route, Routes, Navigate } from 'react-router-dom';
 import DashboardComponent from './Pages/Admin/Dashboard';
 import LoginComponent from "./Pages/Auth/Login";
@@ -16,10 +17,8 @@ import StudentProfileComponent from './Pages/Student/Profile';
 import StudentAttendanceComponent from './Pages/Student/Attendance';
 
 import { Toaster } from 'react-hot-toast';
-import { AuthProvider } from 'react-auth-kit'
-import { RequireAuth } from 'react-auth-kit'
-
-
+import { AuthProvider, RequireAuth } from 'react-auth-kit';
+import RoleAuthContext from "./Context/roleWiseAuth";
 
 function App() {
 
@@ -31,26 +30,28 @@ function App() {
           authName={'_auth'}
           cookieDomain={window.location.hostname}
           cookieSecure={window.location.protocol === "https:"}> 
-            <Routes>
-              <Route path='/' element={<Navigate to="/login" />} />
-              <Route path="/admin-dashboard" element={<RequireAuth loginPath={'/login'}><DashboardComponent /></RequireAuth>} />
-              <Route path="/admin-teachers-module" element={<RequireAuth loginPath={'/login'}><TeachersModule /></RequireAuth>} />
-              <Route path="/admin-students-module" element={<RequireAuth loginPath={'/login'}><StudentsModule /></RequireAuth>} />
-              <Route path="/admin-courses-module" element={<RequireAuth loginPath={'/login'}><CoursesModule /></RequireAuth>} />
+            <RoleAuthContext>
+              <Routes>
+                <Route path='/' element={<Navigate to="/login" />} />
+                <Route path="/admin-dashboard" element={<RequireAuth loginPath={'/login'}><DashboardComponent /></RequireAuth>} />
+                <Route path="/admin-teachers-module" element={<RequireAuth loginPath={'/login'}><TeachersModule /></RequireAuth>} />
+                <Route path="/admin-students-module" element={<RequireAuth loginPath={'/login'}><StudentsModule /></RequireAuth>} />
+                <Route path="/admin-courses-module" element={<RequireAuth loginPath={'/login'}><CoursesModule /></RequireAuth>} />
 
-              {/* <Route path="/teacher-dashboard" element={<TeacherDashboardComponent />} />
-              <Route path="/teacher-students" element={<TeacherStudentsModule />} />
-              <Route path="/teacher-profile" element={<TeacherProfileComponent />} />
-              <Route path="/teacher-attendance" element={<TeacherAttendanceComponent />} />
-              <Route path="/teacher-take-attendance" element={<TeacherTakeAttendaceModule />} />
+                <Route path="/teacher-dashboard" element={<RequireAuth loginPath={'/login'}><TeacherDashboardComponent /></RequireAuth>} />
+                <Route path="/teacher-students" element={<RequireAuth loginPath={'/login'}><TeacherStudentsModule /></RequireAuth>} />
+                <Route path="/teacher-profile" element={<RequireAuth loginPath={'/login'}><TeacherProfileComponent /></RequireAuth>} />
+                <Route path="/teacher-attendance" element={<RequireAuth loginPath={'/login'}><TeacherAttendanceComponent /></RequireAuth>} />
+                <Route path="/teacher-take-attendance" element={<RequireAuth loginPath={'/login'}><TeacherTakeAttendaceModule /></RequireAuth>} />
 
-              <Route path="/student-dashboard" element={<StudentDashboardComponent />} />
-              <Route path="/student-profile" element={<StudentProfileComponent />} />
-              <Route path="/student-attendance" element={<StudentAttendanceComponent />} /> */}
+                <Route path="/student-dashboard" element={<StudentDashboardComponent />} />
+                <Route path="/student-profile" element={<StudentProfileComponent />} />
+                <Route path="/student-attendance" element={<StudentAttendanceComponent />} />
 
-              <Route path="/login" element={<LoginComponent />} />
-              <Route path="/register" element={<RegisterComponent />} />
-            </Routes>
+                <Route path="/login" element={<LoginComponent />} />
+                <Route path="/register" element={<RegisterComponent />} />
+              </Routes>
+            </RoleAuthContext>
         </AuthProvider>
       </div>
     </>

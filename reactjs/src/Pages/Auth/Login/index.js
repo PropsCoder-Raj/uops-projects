@@ -39,9 +39,6 @@ function LoginComponent() {
 
         const res = await loginAuth(email, password);
         if (res.status === 200) {
-            // localStorage.setItem("token", res.data.token);
-            // localStorage.setItem("userId", res.data.user._id);
-            // localStorage.setItem("role", res.data.user.role);
             if (res.data.user.role === 0) {
                 if(signIn({
                     token: res.data.token,
@@ -56,8 +53,20 @@ function LoginComponent() {
                 }else{
                     console.log("Not Login")
                 }
-            }else{
-                toast.error("Login for only admin access");
+            }else if (res.data.user.role === 1) {
+                if(signIn({
+                    token: res.data.token,
+                    expiresIn: 120,
+                    tokenType: "Bearer",
+                    authState: res.data.user,
+                })){
+                    navigate('/teacher-dashboard');
+                    setTimeout(() => {
+                        toast.success("Login successful");
+                    }, 500)
+                }else{
+                    console.log("Not Login")
+                }
             }
         } else if (res.status === 500) {
             toast.error(res.data.message);

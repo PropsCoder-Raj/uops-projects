@@ -6,18 +6,20 @@ import AdminNav from "../../../Components/Layouts/AdminNav";
 
 import { getDashboardCount } from "../../../Services/api/dashboard";
 
-
 import { useSelector, useDispatch } from "react-redux";
 import { setDashboardCount } from "../../../Actions/index";
+import { useAuthUser } from 'react-auth-kit'
+
 
 function DashboardComponent() {
-
+    const auth = useAuthUser()
     const dispatch = useDispatch();
     const dashboardCountSelector = useSelector((state) => state.dashboardCountReducer);
 
     useEffect(() => {
         document.title = "UoPS | Admin - Dashboard";
         getCounts();
+        console.log(auth().role)
     }, [])
 
 

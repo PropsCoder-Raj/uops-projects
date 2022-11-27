@@ -1,13 +1,40 @@
 import "./style.css";
-import { useEffect } from "react";
+import { useEffect, useContext, useState } from "react";
 import FooterComponent from "../../../Components/Layouts/Footer";
 import AdminNav from "../../../Components/Layouts/AdminNav";
+import { useAuthUser } from 'react-auth-kit';
+import { getSingleCourse, getStudentCourseWise } from "../../../Services/api/course";
+
 
 function TeacherDashboardComponent() {
+    const auth = useAuthUser();
+    const [course, setCourse] = useState([]);
+    const [studentCount, setStudentCount] = useState([]);
 
     useEffect(() => {
         document.title = "UoPS | Teacher - Dashboard";
+        getCourse();
+        getStudentCount();
     }, [])
+
+    const getCourse = async() => {
+        const res = await getSingleCourse(auth().courseId[0]);
+        if (res.status === 200) {
+            setCourse(res.data.data[0].name);
+        } else if (res.status === 500) {
+            setCourse("")
+        }
+    }
+    
+    const getStudentCount = async() => {
+        const res = await getStudentCourseWise(auth().courseId[0]);
+        if (res.status === 200) {
+            console.log("res.data: ", res.data)
+            setStudentCount(res.data.count);
+        } else if (res.status === 500) {
+            setStudentCount(0)
+        }
+    }
 
     return (
         <>
@@ -24,7 +51,7 @@ function TeacherDashboardComponent() {
 
                                 <div className="row">
                                     <div className="col-lg-8 mb-4 order-0">
-                                        <div className="card" style={{height: "18rem"}}>
+                                        <div className="card" style={{ height: "18rem" }}>
                                             <div className="d-flex align-items-end row">
                                                 <div className="col-sm-7">
                                                     <div className="card-body">
@@ -52,14 +79,14 @@ function TeacherDashboardComponent() {
                                     </div>
                                     <div className="col-lg-4">
                                         <div className="row">
-                                            <div className="card"  style={{height: "18rem"}}>
+                                            <div className="card" style={{ height: "18rem" }}>
                                                 <div className="d-flex align-items-end row">
                                                     <div className="col-8 my-5 pt-1">
                                                         <div className="card-body text-start">
-                                                            <h3 className="card-title mb-1 text-nowrap">BE in Computer Engineering</h3>
+                                                            <h3 className="card-title mb-1 text-nowrap">{course}</h3>
                                                             <small className="d-block mb-3 text-nowrap">Course</small>
 
-                                                            <h5 className="card-title text-primary mb-1">30</h5>
+                                                            <h5 className="card-title text-primary mb-1">{studentCount}</h5>
                                                             <small className="d-block mb-4 pb-1 text-muted">Total Students</small>
                                                         </div>
                                                     </div>

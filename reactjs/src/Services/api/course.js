@@ -67,3 +67,34 @@ export const getCourses = async() => {
 
     return res;
 }
+
+
+export const getSingleCourse = async(_id) => {
+    const res = await axios(`${base_url}/course/get/${_id}`, {
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then((result) => {
+        return result;
+    }).catch((err) => {
+        return err.response;
+    });
+
+    return res;
+}
+
+export const getStudentCourseWise = async(_id) => {
+    const res = await axios(`${base_url}/course/students/${_id}`, {
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then((result) => {
+        return result;
+    }).catch((err) => {
+        return err.response;
+    });
+
+    return res;
+}
