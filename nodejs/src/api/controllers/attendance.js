@@ -62,7 +62,6 @@ exports.getAttendanceByCourseIdAndTeacherId = BigPromise(async (req, res, next) 
   console.log("start: ", start);
   console.log("end: ", end);
 
-  // const attendance = await Attendance.find({ course: _id, teacher: teacherId, createdAt: { $gte: start, $lt: end } });
   const attendance = await Attendance.aggregate([
     {
       $match: { course: mongoose.Types.ObjectId(_id), teacher: mongoose.Types.ObjectId(teacherId), createdAt: { $gte: start, $lt: end } }
@@ -90,6 +89,20 @@ exports.getAttendanceByStudentId = BigPromise(async (req, res, next) => {
     return next(new Error("Please enter course id."));
   }
 
-  const attendance = await Attendance.find({ student: _id }).sort({ createdAt: -1 });
+  // const attendance = await Attendance.find({ student: _id }).sort({ createdAt: -1 });
+  const attendance = await Attendance.aggregate([
+    {
+      $match: { student: mongoose.Types.ObjectId(_id) }
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "teacher",
+        foreignField: "_id",
+        as: "teacherdata",
+      },
+    },
+    { $sort : { createdAt : -1 } }
+  ]);
   return res.status(200).send({ success: true, message: "Get attendance by student id " + _id + ".", attendance: attendance, count: attendance.length });
 });

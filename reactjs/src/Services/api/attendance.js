@@ -16,6 +16,22 @@ export const getCheckAttendanceWithCourseIdAndTeacherIdAndDate = async(_id, teac
     return res;
 }
 
+
+export const getAttendaceWithStudentId = async(_id) => {
+    const res = await axios(`${base_url}/attendance/student/${_id}`, {
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then((result) => {
+        return result;
+    }).catch((err) => {
+        return err.response;
+    });
+
+    return res;
+}
+
 export const createAttendance = async(course, teacher, student, status) => {
     const payload = { course: course, teacher: teacher, student: student, status: status};
 

@@ -1,16 +1,58 @@
 import "./style.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import FooterComponent from "../../../Components/Layouts/Footer";
 import AdminNav from "../../../Components/Layouts/AdminNav";
+
+import { getAttendaceWithStudentId } from "../../../Services/api/attendance";
+import { useAuthUser } from 'react-auth-kit';
 
 import FullCalendar from '@fullcalendar/react' // must go before plugins
 import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 
 function StudentAttendanceComponent() {
+    
+    const auth = useAuthUser();
+    const [attendance, setAttendance] = useState([]);
 
     useEffect(() => {
         document.title = "UoPS | Student - Daily Attendance";
-    }, [])
+        getAttendace();
+    }, []);
+
+    const getAttendace = async() => {
+        const res = await getAttendaceWithStudentId(auth()._id);
+        if (res.status === 200) {
+            var eventsArr = [];
+            var bar = new Promise((resolve, reject) => {
+                res.data.attendance.forEach((ele, index, array) => {
+                    console.log("ele, ", ele);
+                    let newdate = new Date(ele.createdAt)
+                    let title = "";
+                    let date =  `${newdate.getFullYear()}-${newdate.getMonth()+1}-${newdate.getDate()}`;
+                    let className = "";
+                    if(ele.status === 1){
+                        title = `Present (Teacher: ${ele.teacherdata[0].name})`;
+                        className = "badge bg-success border-0 text-wrap lh-1 px-0 text-capitalize";
+                    }else{
+                        title = `Absent (Teacher: ${ele.teacherdata[0].name})`;
+                        className = "badge bg-danger border-0 text-wrap lh-1 px-0 text-capitalize";
+                    }
+                    eventsArr.push({ title: title, date: date, className: className });
+                    console.log("array: ", eventsArr)
+
+
+                    if(index == array.length - 1){ resolve() }
+                });
+            })
+
+            bar.then(() => {
+                console.log("array: ", eventsArr)
+                setAttendance(eventsArr);
+                console.log("attendance: ", attendance)
+            });
+        } else if (res.status === 500) {
+        }
+    }
 
     return (
         <>
@@ -32,15 +74,11 @@ function StudentAttendanceComponent() {
                                 <div>
                                     <div className="col-lg-12 col-md-6 order-1">
                                         <div className="row">
-                                            <div className="offset-lg-3 col-lg-6">
+                                            <div className="col-lg-12">
                                                 <FullCalendar
                                                     plugins={[ dayGridPlugin ]}
                                                     initialView="dayGridMonth"
-                                                    weekends={false}
-                                                    events={[
-                                                    { title: 'Present', date: '2022-11-01', className: "badge bg-success border-0" },
-                                                    { title: 'Absent', date: '2022-11-02', className: "badge bg-danger border-0" }
-                                                    ]}
+                                                    events={[...attendance]}
                                                 />
                                             </div>
                                         </div>
