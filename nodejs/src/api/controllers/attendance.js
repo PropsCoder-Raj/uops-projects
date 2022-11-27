@@ -2,6 +2,7 @@ const Course = require("../models/course");
 const User = require("../models/user");
 const Attendance = require("../models/attendance");
 const BigPromise = require("../middleware/BigPromise");
+const mongoose = require("mongoose")
 
 // Create a new attendance
 exports.createAttendance = BigPromise(async (req, res, next) => {
@@ -61,7 +62,20 @@ exports.getAttendanceByCourseIdAndTeacherId = BigPromise(async (req, res, next) 
   console.log("start: ", start);
   console.log("end: ", end);
 
-  const attendance = await Attendance.find({ course: _id, teacher: teacherId, createdAt: { $gte: start, $lt: end } });
+  // const attendance = await Attendance.find({ course: _id, teacher: teacherId, createdAt: { $gte: start, $lt: end } });
+  const attendance = await Attendance.aggregate([
+    {
+      $match: { course: mongoose.Types.ObjectId(_id), teacher: mongoose.Types.ObjectId(teacherId), createdAt: { $gte: start, $lt: end } }
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "student",
+        foreignField: "_id",
+        as: "studentdata",
+      },
+    }
+  ]);
   return res.status(200).send({ success: true, message: "Get attendance by course id " + _id + " and by teacher id " + teacherId + ".", attendance: attendance, count: attendance.length });
 });
 

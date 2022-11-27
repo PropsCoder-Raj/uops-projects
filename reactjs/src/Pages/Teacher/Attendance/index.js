@@ -108,7 +108,7 @@ function TeacherAttendanceComponent() {
                                                                             <div className=" d-flex align-items-center flex-column">
                                                                                 <img className="img-fluid rounded my-4" src="../../assets/img/avatars/student.png" height="110" width="110" alt="User avatar" />
                                                                                 <div className="user-info text-center">
-                                                                                    {/* <h6 className="mb-2">{item.name.length > 15 ? item.name.slice(0, 15)+"..." : item.name }</h6> */}
+                                                                                    <h6 className="mb-2">{item.studentdata[0].name.length > 15 ? item.studentdata[0].name.slice(0, 15)+"..." : item.studentdata[0].name }</h6>
                                                                                 </div>
                                                                                 <div>
                                                                                     {
