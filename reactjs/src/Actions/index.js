@@ -12,6 +12,13 @@ export const setTeachers = (array) => {
     }
 }
 
+export const setStudents = (array) => {
+    return { 
+        type: 'SET_STUDENT', 
+        data: array
+    }
+}
+
 export const setDashboardCount = (tecaherCount, studentCount, courseCount) => {
     return { 
         type: 'SET_DASHBOARD', 

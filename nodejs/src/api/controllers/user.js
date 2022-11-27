@@ -50,7 +50,19 @@ exports.signin = BigPromise(async (req, res, next) => {
 });
 
 exports.getStudents = BigPromise(async (req, res, next) => {
-  const users = await User.find({role: 2});
+  const users = await User.aggregate([
+    {
+      $match: { role: 2 }
+    },
+    {
+      $lookup: {
+        from: "courses",
+        localField: "courseId",
+        foreignField: "_id",
+        as: "courses"
+      }
+    }
+  ]);
   return res.status(200).send({ success: true, message: "Get all students successfully.", data: users });
 });
 
