@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
+import { useSignOut } from 'react-auth-kit'
+
 
 function AdminNav(props) {
 
     const { profileImgPath, role } = props;
+    const signOut = useSignOut()
 
     return (
         <>
@@ -64,9 +67,9 @@ function AdminNav(props) {
                                     <div className="dropdown-divider"></div>
                                 </li>
                                 <li>
-                                    <a className="dropdown-item" href="auth-login-basic.html">
+                                    <a className="dropdown-item"  onClick={() => signOut()}>
                                         <i className="bx bx-power-off me-2"></i>
-                                        <span className="align-middle">Log Out</span>
+                                        <span className="align-middle" type="button">Log Out</span>
                                     </a>
                                 </li>
                             </ul>

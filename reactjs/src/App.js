@@ -16,35 +16,44 @@ import StudentProfileComponent from './Pages/Student/Profile';
 import StudentAttendanceComponent from './Pages/Student/Attendance';
 
 import { Toaster } from 'react-hot-toast';
+import { AuthProvider } from 'react-auth-kit'
+import { RequireAuth } from 'react-auth-kit'
+
+
 
 function App() {
-  
+
   return (
     <>
       <Toaster position="bottom-center" />
       <div className="App">
-        <Routes>
-          <Route path='/' element={ <Navigate to="/login" /> }/>
-          <Route path="/admin-dashboard" element={<DashboardComponent />} />
-          <Route path="/admin-teachers-module" element={<TeachersModule />} />
-          <Route path="/admin-students-module" element={<StudentsModule />} />
-          <Route path="/admin-courses-module" element={<CoursesModule />} />
+        <AuthProvider authType={'cookie'}
+          authName={'_auth'}
+          cookieDomain={window.location.hostname}
+          cookieSecure={window.location.protocol === "https:"}> 
+            <Routes>
+              <Route path='/' element={<Navigate to="/login" />} />
+              <Route path="/admin-dashboard" element={<RequireAuth loginPath={'/login'}><DashboardComponent /></RequireAuth>} />
+              <Route path="/admin-teachers-module" element={<RequireAuth loginPath={'/login'}><TeachersModule /></RequireAuth>} />
+              <Route path="/admin-students-module" element={<RequireAuth loginPath={'/login'}><StudentsModule /></RequireAuth>} />
+              <Route path="/admin-courses-module" element={<RequireAuth loginPath={'/login'}><CoursesModule /></RequireAuth>} />
 
-          <Route path="/teacher-dashboard" element={<TeacherDashboardComponent />} />
-          <Route path="/teacher-students" element={<TeacherStudentsModule />} />
-          <Route path="/teacher-profile" element={<TeacherProfileComponent />} />
-          <Route path="/teacher-attendance" element={<TeacherAttendanceComponent />} />
-          <Route path="/teacher-take-attendance" element={<TeacherTakeAttendaceModule />} />
-          
-          <Route path="/student-dashboard" element={<StudentDashboardComponent />} />
-          <Route path="/student-profile" element={<StudentProfileComponent />} />
-          <Route path="/student-attendance" element={<StudentAttendanceComponent />} />
+              {/* <Route path="/teacher-dashboard" element={<TeacherDashboardComponent />} />
+              <Route path="/teacher-students" element={<TeacherStudentsModule />} />
+              <Route path="/teacher-profile" element={<TeacherProfileComponent />} />
+              <Route path="/teacher-attendance" element={<TeacherAttendanceComponent />} />
+              <Route path="/teacher-take-attendance" element={<TeacherTakeAttendaceModule />} />
 
-          <Route path="/login" element={<LoginComponent />} />
-          <Route path="/register" element={<RegisterComponent />} />
-        </Routes>
+              <Route path="/student-dashboard" element={<StudentDashboardComponent />} />
+              <Route path="/student-profile" element={<StudentProfileComponent />} />
+              <Route path="/student-attendance" element={<StudentAttendanceComponent />} /> */}
+
+              <Route path="/login" element={<LoginComponent />} />
+              <Route path="/register" element={<RegisterComponent />} />
+            </Routes>
+        </AuthProvider>
       </div>
-    </>  
+    </>
   );
 }
 

@@ -4,11 +4,14 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import toast from 'react-hot-toast';
-import { loginAuth } from "../../../Services/api/auth"
+import { loginAuth } from "../../../Services/api/auth";
+import { useSignIn } from 'react-auth-kit';
+
 
 function LoginComponent() {
 
     const navigate = useNavigate();
+    const signIn = useSignIn()
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -18,13 +21,13 @@ function LoginComponent() {
 
     const validateEmail = (email) => {
         return email.match(
-          /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         );
     };
 
-    const login = async() => {
+    const login = async () => {
 
-        if(!email || !password){
+        if (!email || !password) {
             toast.error("Please fill in all the fields");
             return;
         }
@@ -36,16 +39,27 @@ function LoginComponent() {
 
         const res = await loginAuth(email, password);
         if (res.status === 200) {
-            localStorage.setItem("token", res.data.token);
-            localStorage.setItem("userId", res.data.user._id);
-            localStorage.setItem("role", res.data.user.role);
-            if(res.data.user.role === 0){
-                navigate('/admin-dashboard');
-                setTimeout(() => {
-                    toast.success("Login successful");
-                }, 500)
+            // localStorage.setItem("token", res.data.token);
+            // localStorage.setItem("userId", res.data.user._id);
+            // localStorage.setItem("role", res.data.user.role);
+            if (res.data.user.role === 0) {
+                if(signIn({
+                    token: res.data.token,
+                    expiresIn: 120,
+                    tokenType: "Bearer",
+                    authState: res.data.user,
+                })){
+                    navigate('/admin-dashboard');
+                    setTimeout(() => {
+                        toast.success("Login successful");
+                    }, 500)
+                }else{
+                    console.log("Not Login")
+                }
+            }else{
+                toast.error("Login for only admin access");
             }
-        }else if(res.status === 500){
+        } else if (res.status === 500) {
             toast.error(res.data.message);
         }
     }
