@@ -120,6 +120,18 @@ exports.updateUser = BigPromise(async (req, res, next) => {
 });
 
 
+// Delete user
+exports.deleteUser = BigPromise(async (req, res, next) => {
+  const { _id } = req.params;
+
+  if (!_id) {
+    return next(new Error("Please enter user _id"));
+  }
+
+  const user = await User.findOneAndDelete({_id: _id});
+  return res.status(200).send({ success: true, message: "Delete user successfully." });
+});
+
 
 
 

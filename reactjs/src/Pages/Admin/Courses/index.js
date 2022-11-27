@@ -237,9 +237,9 @@ function CourcesModule() {
                                           <span style={{ cursor: "pointer" }} onClick={() => {getSingleCourse(ele); setAddEdit(2);}}>
                                             <i className="bx bx-show mx-1"></i>
                                           </span>
-                                          <span style={{ cursor: "pointer" }} onClick={() => deleteCourseById(ele._id)}>
+                                          {/* <span style={{ cursor: "pointer" }} onClick={() => deleteCourseById(ele._id)}>
                                             <i className="bx bx-trash mx-1"></i>
-                                          </span>
+                                          </span> */}
                                         </div>
                                       </td>
                                     </tr>
