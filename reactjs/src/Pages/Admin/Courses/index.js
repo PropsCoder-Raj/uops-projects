@@ -262,11 +262,11 @@ function CourcesModule() {
           </div>
 
 
-          <div className="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
+          <div className="modal fade" id="basicModal" tabIndex="-1" aria-hidden="true">
             <div className="modal-dialog" role="document">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLabel1">Create/Update Cource</h5>
+                  <h5 className="modal-title" id="exampleModalLabel1">{ addEdit == 0 && "Create"} { addEdit == 1 && "Update"} { addEdit == 2 && "View"} Cource</h5>
                   <button
                     type="button"
                     className="btn-close"
@@ -302,8 +302,8 @@ function CourcesModule() {
                   <button type="button" className="btn btn-primary" onClick={ addEdit == 0 ? () => addCourse() :  () => updateCourseById()} hidden={ addEdit === 2 && true }>
                     {
                       loader === true ? 
-                      <div class="spinner-border spinner-border-sm text-dark" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                      <div className="spinner-border spinner-border-sm text-dark" role="status">
+                        <span className="visually-hidden">Loading...</span>
                       </div> :
                       "Save changes"
                     }

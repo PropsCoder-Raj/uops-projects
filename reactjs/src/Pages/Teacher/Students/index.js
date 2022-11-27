@@ -171,7 +171,7 @@ function TeacherStudentsModule() {
 
 
           
-          <div className="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
+          <div className="modal fade" id="basicModal" tabIndex="-1" aria-hidden="true">
             <div className="modal-dialog" role="document">
               <div className="modal-content">
                 <div className="modal-header">

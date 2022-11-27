@@ -4,8 +4,6 @@ function AdminNav(props) {
 
     const { profileImgPath, role } = props;
 
-    console.log("window.location.pathname: ", window.location.pathname)
-
     return (
         <>
             <nav className="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
@@ -26,17 +24,17 @@ function AdminNav(props) {
                         <li className="nav-item lh-1 me-3">
                             { role === "teacher" &&
                                 <div className="navbar-nav me-auto w-100">
-                                    <Link class={ window.location.pathname === "/teacher-dashboard" ? "nav-item nav-link active" : "nav-item nav-link" } to="/teacher-dashboard">Dashboard</Link>
-                                    <Link class={ window.location.pathname === "/teacher-students" ? "nav-item nav-link active" : "nav-item nav-link" } to="/teacher-students">Students</Link>
-                                    <Link class={ window.location.pathname === "/teacher-attendance" ? "nav-item nav-link active" : "nav-item nav-link" } to="/teacher-attendance">Daily Attendance</Link>
-                                    <Link class={ window.location.pathname === "/teacher-profile" ? "nav-item nav-link active" : "nav-item nav-link" } to="/teacher-profile">Profile</Link>
+                                    <Link className={ window.location.pathname === "/teacher-dashboard" ? "nav-item nav-link active" : "nav-item nav-link" } to="/teacher-dashboard">Dashboard</Link>
+                                    <Link className={ window.location.pathname === "/teacher-students" ? "nav-item nav-link active" : "nav-item nav-link" } to="/teacher-students">Students</Link>
+                                    <Link className={ window.location.pathname === "/teacher-attendance" ? "nav-item nav-link active" : "nav-item nav-link" } to="/teacher-attendance">Daily Attendance</Link>
+                                    <Link className={ window.location.pathname === "/teacher-profile" ? "nav-item nav-link active" : "nav-item nav-link" } to="/teacher-profile">Profile</Link>
                                 </div>
                             }
                             { role === "student" &&
                                 <div className="navbar-nav me-auto">
-                                    <Link class={ window.location.pathname === "/student-dashboard" ? "nav-item nav-link active" : "nav-item nav-link" } to="/student-dashboard">Dashboard</Link>
-                                    <Link class={ window.location.pathname === "/student-attendance" ? "nav-item nav-link active" : "nav-item nav-link" } to="/student-attendance">Attendance</Link>
-                                    <Link class={ window.location.pathname === "/student-profile" ? "nav-item nav-link active" : "nav-item nav-link" } to="/student-profile">Profile</Link>
+                                    <Link className={ window.location.pathname === "/student-dashboard" ? "nav-item nav-link active" : "nav-item nav-link" } to="/student-dashboard">Dashboard</Link>
+                                    <Link className={ window.location.pathname === "/student-attendance" ? "nav-item nav-link active" : "nav-item nav-link" } to="/student-attendance">Attendance</Link>
+                                    <Link className={ window.location.pathname === "/student-profile" ? "nav-item nav-link active" : "nav-item nav-link" } to="/student-profile">Profile</Link>
                                 </div>
                             }
                         </li>

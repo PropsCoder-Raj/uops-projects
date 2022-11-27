@@ -1,33 +1,63 @@
 import "./style.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import FooterComponent from "../../../Components/Layouts/Footer";
 import SidemenuComponent from "../../../Components/Layouts/Sidemenu";
 import AdminNav from "../../../Components/Layouts/AdminNav";
 import $ from "jquery";
 
 import { useSelector, useDispatch } from "react-redux";
+import { setCourses } from "../../../Actions/index"
 import { setTeachers } from "../../../Actions/index"
 import toast from 'react-hot-toast';
-import { getTeachers } from "../../../Services/api/teacher";
+import { getCourses  } from "../../../Services/api/course";
+import { getTeachers, createTeachers, updateTeacher } from "../../../Services/api/teacher";
 
 function TeachersModule() {
   
   const dispatch = useDispatch();
   const teachersSelector = useSelector((state) => state.teachersReducer);
+  const courseSelector = useSelector((state) => state.courseReducer);
+  
+  const [addEdit, setAddEdit] = useState(0);
+  var [name, setName] = useState("");
+  var [email, setEmail] = useState("");
+  var [password, setPassword] = useState("");
+  var [phoneNumber, setPhoneNumber] = useState("");
+  var [courseId, setCourseId] = useState("");
+  var [objectId, setObjectId] = useState("");
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     document.title = "UoPS | Admin - Teacher Module";
-    getTecahers()
+    getTeachersData();
   }, [])
+  
+  const validateEmail = (email) => {
+    return email.match(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+  };
 
-  const getTecahers = async() => {
+  const getTeachersData = async() => {
     $("#teacherTableDT").DataTable().destroy();
+    getCourse()
     const res = await getTeachers();
     if (res.status === 200) {
       dispatch(setTeachers(res.data.data))
       dataTableApply();
     } else if (res.status === 500) {
       dispatch(setTeachers([]))
+      dataTableApply();
+    }
+  }
+
+  const getCourse = async() => {
+    $("#courseTableDT").DataTable().destroy();
+    const res = await getCourses();
+    if (res.status === 200) {
+      dispatch(setCourses(res.data.data))
+      dataTableApply();
+    } else if (res.status === 500) {
+      dispatch(setCourses([]))
       dataTableApply();
     }
   }
@@ -97,15 +127,81 @@ function TeachersModule() {
     }
   }
 
-  const array = [
-    { name: "Stephen Schwarzman", email: "stephenschwarzman@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
-    { name: "Lee Shau Kee", email: "leeshaukee@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
-    { name: "Jeff Yass", email: "jeffyass@gmail.com", course: "B.B.A", status: "ACTIVE" },
-    { name: "Andrey Melnichenko", email: "andreymelnichenko@gmail.com", course: "B.Com", status: "ACTIVE" },
-    { name: "Jim Simons", email: "jimsimons@gmail.com", course: "BE in Computer Engineering", status: "DEACTIVE" },
-    { name: "Robin Zeng", email: "robinzeng@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
-    { name: "Gina Rinehart", email: "gina@gmail.com", course: "BE in Computer Engineering", status: "ACTIVE" },
-  ]
+  const addTeacher = async() => {
+    if (!name || !email || !password || !phoneNumber || !courseId) {
+      toast.error("All fields must be provided.")
+      return;
+    }
+
+    if (!validateEmail(email)) {
+      toast.error("Email is not valid");
+      return;
+    }
+
+    setLoader(true);
+    const res = await createTeachers(name, email, password, phoneNumber, courseId, 1, 1);
+    if (res.status === 200) {
+      toast.success("Teacher created successfully");
+      setLoader(false);
+      clearFields();
+      document.getElementById("closeCourseModal").click();
+      getTeachersData()
+    } else if (res.status === 500) {
+      toast.error(res.data.message);
+      getTeachersData();
+      clearFields();
+    }
+  }
+  
+  const updateSingleTeacher = async() => {
+    
+    var _name = document.getElementById("adminTeacherName").value;
+    var _email = document.getElementById("adminTeacherEmail").value;
+    var _courseId = document.getElementById("adminTeacherCourseSelect").value;
+    var _phoneNumber = document.getElementById("adminTeacherPhoneNumber").value;
+
+    if (!_name || !_email || !_phoneNumber || !_courseId) {
+      toast.error("All fields must be provided.")
+      return;
+    }
+
+    if (!validateEmail(_email)) {
+      toast.error("Email is not valid");
+      return;
+    }
+
+    setLoader(true);
+    const res = await updateTeacher(_name, _email, _phoneNumber, _courseId, objectId);
+    if (res.status === 200) {
+      toast.success("Update teacher successfully");
+      setLoader(false);
+      clearFields();
+      document.getElementById("closeCourseModal").click();
+      getTeachersData()
+    } else if (res.status === 500) {
+      toast.error(res.data.message);
+      getTeachersData();
+      clearFields();
+    }
+  }
+
+  
+  const clearFields = async() => {
+    document.getElementById("adminTeacherName").value = "";
+    document.getElementById("adminTeacherEmail").value = "";
+    document.getElementById("adminTeacherPhoneNumber").value = "";
+    document.getElementById("adminTeacherCourseSelect").value = "";
+    document.getElementById("adminTeacherPassword").value = "";
+  }
+
+  const getSingleTeacher = async(ele) => {
+    document.getElementById("adminTeacherName").value = ele.name;
+    document.getElementById("adminTeacherEmail").value = ele.email;
+    document.getElementById("adminTeacherCourseSelect").value = ele.courseId[0];
+    document.getElementById("adminTeacherPhoneNumber").value = ele.phoneNumber;
+    
+    document.getElementById("modalOpenModalBtn").click();
+  }
 
   return (
     <>
@@ -132,8 +228,20 @@ function TeachersModule() {
                           className="btn btn-primary float-end"
                           data-bs-toggle="modal"
                           data-bs-target="#basicModal"
+                          id="basicModalBtn"
+                          onClick={() => { setAddEdit(0); clearFields() }}
                         >
                           Add Teacher
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-primary float-end"
+                          data-bs-toggle="modal"
+                          data-bs-target="#basicModal"
+                          id="modalOpenModalBtn"
+                          hidden="true"
+                        >
+                          modalOpen
                         </button>
                       </h5>
                       <div className="card-content p-2">
@@ -145,29 +253,31 @@ function TeachersModule() {
                                 <th>Teachers Name</th>
                                 <th>Email</th>
                                 <th>Courses</th>
+                                <th>Phone Number</th>
                                 <th>Status</th>
                                 <th>Action</th>
                               </tr>
                             </thead>
                             <tbody className="table-border-bottom-0">
                               {
-                                teachersSelector.map((ele, index) => {
+                                teachersSelector.map((eleAdminTeacher, index) => {
                                   return (<>
                                     <tr>
                                       <td>{index + 1}</td>
-                                      <td>{ele.name}</td>
-                                      <td>{ele.email}</td>
-                                      <td>{ele.courses[0].name}</td>
+                                      <td>{eleAdminTeacher.name}</td>
+                                      <td>{eleAdminTeacher.email}</td>
+                                      <td>{eleAdminTeacher.courses[0].name}</td>
+                                      <td>+44 {eleAdminTeacher.phoneNumber}</td>
                                       <td>
-                                        {ele.status === 1 && <span className="badge bg-label-success"> ACTIVE </span>}
-                                        {ele.status === 0 && <span className="badge bg-label-danger"> DEACTIVE </span>}
+                                        {eleAdminTeacher.status === 1 && <span className="badge bg-label-success"> ACTIVE </span>}
+                                        {eleAdminTeacher.status === 0 && <span className="badge bg-label-danger"> DEACTIVE </span>}
                                       </td>
                                       <td>
                                         <div className="d-flex align-items-center">
-                                          <span style={{ cursor: "pointer" }}>
+                                          <span style={{ cursor: "pointer" }} onClick={() => {getSingleTeacher(eleAdminTeacher); setAddEdit(1); setObjectId(eleAdminTeacher._id) }}>
                                             <i className="bx bx-pen mx-1"></i>
                                           </span>
-                                          <span style={{ cursor: "pointer" }}>
+                                          <span style={{ cursor: "pointer" }} onClick={() => {getSingleTeacher(eleAdminTeacher); setAddEdit(2); }}>
                                             <i className="bx bx-show mx-1"></i>
                                           </span>
                                         </div>
@@ -193,66 +303,78 @@ function TeachersModule() {
 
 
           
-          <div className="modal fade" id="basicModal" tabindex="-1" aria-hidden="true">
+          <div className="modal fade" id="basicModal" tabIndex="-1" aria-hidden="true">
             <div className="modal-dialog" role="document">
               <div className="modal-content">
                 <div className="modal-header">
-                  <h5 className="modal-title" id="exampleModalLabel1">Create/Update Teacher</h5>
+                  <h5 className="modal-title" id="exampleModalLabel1">{ addEdit == 0 && "Create"} { addEdit == 1 && "Update"} { addEdit == 2 && "View"} Teacher</h5>
                   <button
                     type="button"
                     className="btn-close"
                     data-bs-dismiss="modal"
                     aria-label="Close"
+                    onClick={() => {setAddEdit(0); clearFields()}}
                   ></button>
                 </div>
                 <div className="modal-body text-start">
                   <div className="row">
                     <div className="col mb-3">
-                      <label htmlFor="teacherName" className="form-label">Teacher Name</label>
-                      <input type="text" id="teacherName" className="form-control" placeholder="Teacher Name" />
+                      <label htmlFor="adminTeacherName" className="form-label">Teacher Name</label>
+                      <input type="text" id="adminTeacherName" className="form-control" placeholder="Teacher Name" onChange={(e) => { setName(e.target.value) }}  disabled={ addEdit === 2 && true } />
                     </div>
                   </div>
                   <div className="row">
                     <div className="col mb-3">
-                      <label htmlFor="email" className="form-label">Email</label>
-                      <input type="email" id="email" className="form-control" placeholder="Email" />
+                      <label htmlFor="adminTeacherEmail" className="form-label">Email</label>
+                      <input type="email" id="adminTeacherEmail" className="form-control" placeholder="Email" onChange={(e) => { setEmail(e.target.value) }}  disabled={ addEdit === 2 && true } />
                     </div>
                   </div>
+                  {
+                    addEdit === 0 && <>
+                      <div className="row">
+                        <div className="col mb-3">
+                          <label htmlFor="adminTeacherPassword" className="form-label">Password</label>
+                          <input type="password" id="adminTeacherPassword" className="form-control" placeholder="Password" onChange={(e) => { setPassword(e.target.value) }}  disabled={ addEdit === 2 && true } />
+                        </div>
+                      </div>
+                    </>
+                  }
                   <div className="row">
                     <div className="col mb-3">
-                      <label htmlFor="period" className="form-label">Phone Number</label>
+                      <label htmlFor="adminTeacherPhoneNumber" className="form-label">Phone Number</label>
                       <div className="input-group">
                         <span className="input-group-text">+44</span>
-                        <input type="number" className="form-control" placeholder="Phone Number" aria-label="Phone Number" />
+                        <input type="number" className="form-control" id="adminTeacherPhoneNumber" placeholder="Phone Number" aria-label="Phone Number" onChange={(e) => { setPhoneNumber(e.target.value) }}  disabled={ addEdit === 2 && true } />
                       </div>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col mb-3">
                       <label htmlFor="course" className="form-label">Course</label>
-                      <select className="form-select" id="courseOption">
+                      <select className="form-select" id="adminTeacherCourseSelect"  onChange={(e) => { setCourseId(e.target.value) }} disabled={ addEdit === 2 && true }>
                         <option selected="" disabled>--SELECT--</option>
-                        <option value="B.Com">B.Com</option>
-                        <option value="B.Sc">B.Sc</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col mb-3">
-                      <label htmlFor="status" className="form-label">Status</label>
-                      <select className="form-select">
-                        <option selected="" disabled>--SELECT--</option>
-                        <option value="1">ACTIVE</option>
-                        <option value="0">DEACTIVE</option>
+                        {
+                          courseSelector.map((course) => {
+                            return <option value={course._id}>{course.name}</option>
+                          })
+                        }
                       </select>
                     </div>
                   </div>
                 </div>
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-outline-secondary" data-bs-dismiss="modal">
+                  <button type="button" className="btn btn-outline-secondary" data-bs-dismiss="modal" id="closeCourseModal" onClick={() => {setAddEdit(0); clearFields()}}>
                     Close
                   </button>
-                  <button type="button" className="btn btn-primary">Save changes</button>
+                  <button type="button" className="btn btn-primary" onClick={ () => addEdit === 0 ? addTeacher() : updateSingleTeacher() }  hidden={ addEdit === 2 && true }>
+                    {
+                      loader === true ? 
+                      <div className="spinner-border spinner-border-sm text-dark" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                      </div> :
+                      "Save changes"
+                    }
+                    </button>
                 </div>
               </div>
             </div>
