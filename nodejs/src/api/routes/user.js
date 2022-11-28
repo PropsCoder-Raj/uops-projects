@@ -7,9 +7,6 @@ const {
   getSingleUser,
   updateUser,
   deleteUser,
-  forgotPassword,
-  passwordReset,
-  changePassword,
 } = require("../controllers/user");
 const { isLoggedIn } = require("../middleware/user");
 const router = express.Router();
@@ -21,8 +18,5 @@ router.route("/teachers").get(getTeachers);
 router.route("/single/:_id").get(getSingleUser);
 router.route("/single/:_id").put(updateUser);
 router.route("/delete/:_id").delete(deleteUser);
-// router.route("/forgotpassword").post(forgotPassword);
-// router.route("/password/reset/:token").post(passwordReset);
-// router.route("/change/password").post(isLoggedIn, changePassword);
 
 module.exports = router;
