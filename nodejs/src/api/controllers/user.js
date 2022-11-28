@@ -46,7 +46,6 @@ exports.signin = BigPromise(async (req, res, next) => {
     return next(new Error("Email or password does not match or exist", 400));
   }
   cookieToken(user, res);
-  logger.info(`Signin IP ${req.ip} of ${user.email}`);
 });
 
 exports.getStudents = BigPromise(async (req, res, next) => {
