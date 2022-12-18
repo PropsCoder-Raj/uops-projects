@@ -16,7 +16,7 @@ function TeacherAttendanceComponent() {
     useEffect(() => {
         document.title = "UoPS | Teacher - Daily Attendance";
         let today = new Date();
-        setDate(`${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`)
+        setDate(`${today.getFullYear()}-${today.getMonth()+1}-${today.getDate() < 10 ? "0"+today.getDate() : today.getDate() }`)
         setTimeout(() => {
             changeaDateGetAttendance();
         }, 500);
@@ -29,7 +29,7 @@ function TeacherAttendanceComponent() {
     const changeaDateGetAttendance = async() => {
         var _date = document.getElementById("attendDate").value;
         let today = new Date();
-        var todayString = `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate()}`
+        var todayString = `${today.getFullYear()}-${today.getMonth()+1}-${today.getDate() < 10 ? "0"+today.getDate() : today.getDate()  }`
         const res = await getCheckAttendanceWithCourseIdAndTeacherIdAndDate(auth().courseId[0], auth()._id, _date);
         if (res.status === 200) {
             if(res.data.count > 0){
@@ -42,6 +42,8 @@ function TeacherAttendanceComponent() {
                 if(todayString.toString() === _date.toString()){
                     setTakeAttendanceStatus(true)
                     console.log("takeAttendaceStatus: ", takeAttendaceStatus);
+                }else{
+                    setTakeAttendanceStatus(false)
                 }
                 setAttendance([])
             }
